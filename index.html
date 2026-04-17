@@ -358,7 +358,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 
 
 
-<div data-spectra-id="spectra-mf6kf9af-cspejj" style="overflow: visible; --spectra-background-color: var(--ast-global-color-4);" class="spectra-is-root-container alignfull spectra-overlay-color spectra-overflow spectra-background-color wp-block-spectra-container" data-orientation="vertical">
+<div id="seccion-servicios" data-spectra-id="spectra-mf6kf9af-cspejj" style="overflow: visible; --spectra-background-color: var(--ast-global-color-4);" class="spectra-is-root-container alignfull spectra-overlay-color spectra-overflow spectra-background-color wp-block-spectra-container" data-orientation="vertical">
 	
 <div data-spectra-id="spectra-mf6kf9ad-f7w2p8" style="overflow: visible" class="spectra-overlay-color spectra-overflow wp-block-spectra-container" data-orientation="vertical">
 	
@@ -648,18 +648,54 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
     <img src="./sistema_web/assets/uploads/2026/04/agregale_un_globo_202604162155.png" alt="Banner Meta" class="w-full h-auto block object-cover">
 </div>
 
-<!-- Tracker de Clics Global e Individual -->
+<!-- Tracker de Clics Global, Webhook n8n y Auto-Scroll -->
 <script>
+    // 1. Rastreo de Clics (CounterAPI + Webhook n8n)
     document.addEventListener('click', function(e) {
-        // 1. Contador Global de Clics
-        fetch('https://api.counterapi.dev/v1/axelongosite/global_clicks/up').catch(() => {});
+        // Ignorar el boton de envio del formulario ya que tiene su propia logica de webhook mas completa
+        if (e.target.id === 'submit-btn') return;
 
-        // 2. Contador Individual (basado en data-tracker)
-        const trackerElement = e.target.closest('[data-tracker]');
-        if (trackerElement) {
-            const key = trackerElement.getAttribute('data-tracker');
-            fetch(`https://api.counterapi.dev/v1/axelongosite/${key}/up`).catch(() => {});
+        const target = e.target.closest('a.wp-block-button__link, button, .btn-orange-hover, [data-tracker]');
+        if (!target) return;
+
+        // CounterAPI (Analytics)
+        fetch('https://api.counterapi.dev/v1/axelongosite/global_clicks/up').catch(() => {});
+        const trackerKey = target.getAttribute('data-tracker');
+        if (trackerKey) {
+            fetch(`https://api.counterapi.dev/v1/axelongosite/${trackerKey}/up`).catch(() => {});
         }
+
+        // Webhook n8n (Integracion)
+        const payload = {
+            event: "button_click",
+            text: target.innerText.trim() || target.value || "Click",
+            id: target.id || trackerKey || target.getAttribute('data-spectra-id') || "generic",
+            page_url: window.location.href,
+            page_title: document.title,
+            timestamp: new Date().toISOString()
+        };
+
+        fetch('https://demian405-n8n-free.hf.space/webhook/Formulario', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).catch(() => {});
+    });
+
+    // 2. Auto-Scroll despues de 3 segundos
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const targetSection = document.getElementById('seccion-servicios');
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Opcional: Activar la pestana de Publicidad Digital (index 1) si existe el disparador
+                const pubBtn = document.querySelector('[data-tracker="cat_publicidad"]');
+                if (pubBtn) {
+                    setTimeout(() => pubBtn.click(), 800);
+                }
+            }
+        }, 3000);
     });
 </script>
 
