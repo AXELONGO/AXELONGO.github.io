@@ -20,28 +20,8 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     color: #000000 !important;
 }
 
-/* --- COMPONENTES GLOBALES --- */
-.btn-orange-hover {
-    display: inline-block !important;
-    border-radius: 50px !important;
-    padding: 14px 34px !important;
-    border: 2px solid #f9a825 !important;
-    color: #f9a825 !important;
-    background: transparent !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    transition: all 0.25s ease !important;
-    text-transform: none !important;
-}
-.btn-orange-hover:hover {
-    background: #f9a825 !important;
-    color: white !important;
-    transform: translateY(-2px);
-}
-
-/* Botón Enviar (Contacto) - REPARACIÓN FINAL */
-/* Botón Enviar (Contacto) - REPARACIÓN FINAL */
-.form-submit-btn, button[type="submit"] {
+/* --- COMPONENTES GLOBALES Y BOTONES --- */
+.form-submit-btn, button[type="submit"], .wp-block-button__link, .btn-orange-hover {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -54,7 +34,7 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     background: #ffffff !important;
     border-radius: 100px !important;
     font-weight: 800 !important;
-    font-size: 1.8rem !important;
+    font-size: 1.5rem !important; /* Slightly adjusted to fit long text if necessary */
     text-align: center !important;
     margin: 40px auto 20px auto !important;
     cursor: pointer !important;
@@ -62,13 +42,17 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
     outline: none !important;
     box-sizing: border-box !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    line-height: 1.2 !important;
 }
 
-.form-submit-btn:hover, button[type="submit"]:hover {
+.form-submit-btn:hover, button[type="submit"]:hover, .wp-block-button__link:hover, .btn-orange-hover:hover {
     background: #f9a825 !important;
     color: #ffffff !important;
     transform: translateY(-5px) !important;
     box-shadow: 0 8px 20px rgba(249, 168, 37, 0.4) !important;
+    text-decoration: none !important;
 }
 
 @media (min-width: 1024px) {
