@@ -77,20 +77,6 @@
             </button>
         </div>
 
-        <!-- Stats Grid Principal -->
-        <div class="mb-8">
-            <!-- Clicks Counter Card -->
-            <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm flex items-center gap-5 group hover:border-orange-400 transition-all max-w-sm">
-                <div class="bg-orange-50 p-4 rounded-xl group-hover:bg-orange-100 transition-all">
-                    <i class="fa-solid fa-mouse-pointer text-orange-500 text-3xl"></i>
-                </div>
-                <div>
-                    <p class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Clics Totales (Cualquier lugar)</p>
-                    <h2 id="global-click-count" class="text-3xl font-black text-slate-900">0</h2>
-                </div>
-            </div>
-        </div>
-
         <!-- Secciones de Detalle -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             
@@ -208,7 +194,6 @@
         checkAuth();
 
         const metrics = [
-            'global_clicks',
             'social_fb', 'social_wa', 'social_ig', 'social_tk', 'social_yt',
             'cat_marketing', 'cat_publicidad', 'cat_web'
         ];
