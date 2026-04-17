@@ -21,7 +21,9 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
 }
 
 /* --- COMPONENTES GLOBALES Y BOTONES --- */
-.form-submit-btn, button[type="submit"], .wp-block-button__link, .btn-orange-hover {
+
+/* Botones Generales "Saber más" etc. */
+.wp-block-button__link, .btn-orange-hover {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -34,7 +36,7 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     background: #f9a825 !important;
     border-radius: 100px !important;
     font-weight: 800 !important;
-    font-size: 1.5rem !important; /* Slightly adjusted to fit long text if necessary */
+    font-size: 1.5rem !important;
     text-align: center !important;
     margin: 40px auto 20px auto !important;
     cursor: pointer !important;
@@ -47,7 +49,7 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     line-height: 1.2 !important;
 }
 
-.form-submit-btn:hover, button[type="submit"]:hover, .wp-block-button__link:hover, .btn-orange-hover:hover {
+.wp-block-button__link:hover, .btn-orange-hover:hover {
     background: #f9a825 !important;
     color: #ffffff !important;
     transform: translateY(-5px) !important;
@@ -55,6 +57,36 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     text-decoration: none !important;
 }
 
+/* Botón de Submit específico (Formulario) */
+.form-submit-btn, button[type="submit"] {
+    display: block !important;
+    width: auto !important;
+    min-width: 250px !important; /* Ovalo más grande que la palabra */
+    padding: 20px 60px !important; /* Mucho aire a los lados */
+    border: none !important;
+    color: #ffffff !important;
+    background: #f9a825 !important;
+    border-radius: 100px !important; /* Forma de pastilla perfecta */
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+    text-align: center !important;
+    margin: 30px auto 0 auto !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease !important; /* SIN EFECTO ZOOM NI SHIFT DE TRANSLATE */
+    box-shadow: none !important;
+    outline: none !important;
+    text-transform: none !important;
+}
+
+.form-submit-btn:hover, button[type="submit"]:hover {
+    background: #e69522 !important; /* Solo oscurece un poco, sin zoom */
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.form-submit-btn:active, button[type="submit"]:active {
+    transform: none !important;
+}
 @media (min-width: 1024px) {
     .desktop-gradient-title {
         color: #f9a825 !important;
