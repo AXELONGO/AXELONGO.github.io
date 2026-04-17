@@ -724,5 +724,13 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
     <span>Mis datos</span>
 </a>
 
+<!-- Tracker de Clics Global -->
+<script>
+    document.addEventListener('click', function() {
+        // Incrementa el contador global de forma anónima
+        fetch('https://api.countapi.xyz/hit/axelongosite/global_clicks').catch(err => console.log('Tracker standby'));
+    });
+</script>
+
 </body>
 </html>

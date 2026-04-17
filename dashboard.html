@@ -68,6 +68,22 @@
             </div>
         </div>
 
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Clicks Counter Card -->
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl flex items-center gap-5 group hover:border-blue-500/50 transition-all">
+                <div class="bg-blue-500/10 p-4 rounded-xl group-hover:bg-blue-500/20 transition-all">
+                    <i class="fa-solid fa-mouse-pointer text-blue-500 text-3xl"></i>
+                </div>
+                <div>
+                    <p class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Clics Totales (Index)</p>
+                    <h2 id="global-click-count" class="text-3xl font-black text-white">Cargando...</h2>
+                </div>
+            </div>
+            
+            <!-- Aquí puedes añadir más tarjetas como "Sesiones", "Usuarios", etc. -->
+        </div>
+
         <!-- Dashboard Container (Responsive Iframe Wrapper) -->
         <div class="bg-slate-900 rounded-3xl border border-slate-800 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden relative group">
             
@@ -99,6 +115,24 @@
         </footer>
         
     </main>
+
+    <script>
+        async function updateClickCounter() {
+            try {
+                const response = await fetch('https://api.countapi.xyz/get/axelongosite/global_clicks');
+                const data = await response.json();
+                document.getElementById('global-click-count').innerText = data.value.toLocaleString();
+            } catch (error) {
+                document.getElementById('global-click-count').innerText = "0";
+                console.log("Esperando primeros clics...");
+            }
+        }
+
+        // Actualizar al cargar
+        updateClickCounter();
+        // Actualizar cada 30 segundos
+        setInterval(updateClickCounter, 30000);
+    </script>
 
 </body>
 </html>
