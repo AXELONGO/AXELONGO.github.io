@@ -30,8 +30,8 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     min-height: 80px !important;
     padding: 20px 40px !important;
     border: 3px solid #f9a825 !important;
-    color: #f9a825 !important;
-    background: #ffffff !important;
+    color: #ffffff !important;
+    background: #f9a825 !important;
     border-radius: 100px !important;
     font-weight: 800 !important;
     font-size: 1.5rem !important; /* Slightly adjusted to fit long text if necessary */
