@@ -9,11 +9,11 @@ Este sitio ha sido convertido de WordPress a HTML estático. Aquí te explico qu
 - **Otras carpetas (shop, checkout, etc.)**: Contienen las subpáginas de tu sitio. Cada una tiene su propio `index.html`.
 
 ## 🖼️ Recursos y Activos
-- **wp-content/**: ¡Aquí vive casi todo lo visual! 
+- **assets/**: ¡Aquí vive casi todo lo visual! 
   - `uploads/`: Todas tus imágenes, fotos y videos.
   - `themes/`: Los estilos (CSS) que hacen que el sitio se vea bonito (Astra).
   - `plugins/`: Funciones extra como los bloques de Spectra que usamos.
-- **wp-includes/**: Archivos base necesarios para que cosas como los emojis o scripts básicos funcionen.
+- **core/**: Archivos base necesarios para que cosas como los emojis o scripts básicos funcionen.
 
 ---
 💡 **TIP DE HACKER:** Todas las rutas ahora son relativas (empiezan con `./`), lo que permite que el sitio funcione en cualquier carpeta de GitHub Pages.
