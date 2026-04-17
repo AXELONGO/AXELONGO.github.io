@@ -687,9 +687,15 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
 	
 
 <!-- Banner Publicitario Final -->
-<div class="w-full bg-slate-100">
+<div class="w-full bg-white">
     <img src="./assets/uploads/2026/04/Portada%20(2).png" alt="Banner Meta" class="w-full h-auto block object-cover">
 </div>
+
+<style>
+    h1, h2, h3, h4, h5, h6, .uagb-toc__title {
+        color: #ff8c00 !important; /* Naranja vibrante */
+    }
+</style>
 
 <!-- Login Button for Dashboard -->
 <a href="#" onclick="var user = prompt('Usuario:'); var pass = prompt('Contraseña:'); if(user==='axel' && pass==='axel123') { window.location.href='./dashboard.html'; } else if (user||pass) { alert('Datos incorrectos'); } return false;" class="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-[9999] flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-sans font-medium text-sm md:text-base px-5 py-3.5 md:px-7 md:py-4 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-slate-700/50 transition-all active:scale-95 duration-300">
