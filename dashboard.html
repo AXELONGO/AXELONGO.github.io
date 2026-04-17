@@ -65,17 +65,6 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         
-        <!-- Header del Dashboard -->
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
-            <div>
-                <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">Panel de Análisis <span class="text-orange-500">AXELONGO</span></h1>
-                <p class="text-slate-500 text-sm sm:text-base mt-2">Monitoreo de rendimiento y conversiones en tiempo real</p>
-            </div>
-            <button onclick="updateMetrics()" class="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-2xl font-bold transition-all shadow-lg active:scale-95 group">
-                <i class="fa-solid fa-rotate group-hover:rotate-180 transition-transform duration-500"></i>
-                Actualizar Ahora
-            </button>
-        </div>
 
         <!-- Secciones de Detalle -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
@@ -159,26 +148,60 @@
     </div>
 
     <script>
-        // --- Sistema de Autenticación Ligero ---
+        // --- Definir métricas y función PRIMERO para que estén disponibles antes de checkAuth ---
+        const metrics = [
+            'social_fb', 'social_wa', 'social_ig', 'social_tk', 'social_yt',
+            'cat_marketing', 'cat_publicidad', 'cat_web'
+        ];
+
+        async function updateMetrics() {
+            console.log('--- Actualizando métricas ---');
+            for (const key of metrics) {
+                try {
+                    const url = `https://api.counterapi.dev/v1/axelongosite/${key}/?t=${Date.now()}`;
+                    const response = await fetch(url);
+                    const elementId = `count-${key}`;
+                    const el = document.getElementById(elementId);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const data = await response.json();
+                    if (el) {
+                        el.innerText = (data.count || 0).toLocaleString();
+                        el.classList.remove('text-red-500');
+                        el.classList.add('text-orange-500');
+                    }
+                    console.log(`OK [${key}]: ${data.count}`);
+                } catch (error) {
+                    console.warn(`FAIL [${key}]:`, error.message);
+                    const el = document.getElementById(`count-${key}`);
+                    if (el) {
+                        el.innerText = error.message.includes('HTTP') ? error.message : 'Error Red';
+                        el.classList.add('text-red-500');
+                    }
+                }
+                await new Promise(r => setTimeout(r, 100));
+            }
+            console.log('--- Actualización completada ---');
+        }
+
+        // --- Sistema de Autenticación ---
         function checkAuth() {
             if (sessionStorage.getItem('dashboard_auth') === 'granted') {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('dashboard-content').style.display = 'block';
-                updateMetrics(); // Cargar métricas solo al autenticar
+                updateMetrics();
             }
         }
         
         function verifyPassword() {
             const pass = document.getElementById('password-input').value;
             const err = document.getElementById('auth-error');
-            
             if (pass === 'axel123') {
                 sessionStorage.setItem('dashboard_auth', 'granted');
                 document.getElementById('login-screen').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('login-screen').style.display = 'none';
                     document.getElementById('dashboard-content').style.display = 'block';
-                    updateMetrics(); // Arrancar motor de métricas
+                    updateMetrics();
                 }, 300);
             } else {
                 err.classList.remove('hidden');
@@ -190,65 +213,12 @@
             }
         }
         
-        // Ejecutar check visual al cargar la página
+        // checkAuth va AL FINAL, cuando ya todo está definido
         checkAuth();
 
-        const metrics = [
-            'social_fb', 'social_wa', 'social_ig', 'social_tk', 'social_yt',
-            'cat_marketing', 'cat_publicidad', 'cat_web'
-        ];
-
-        async function updateMetrics() {
-            const btn = document.querySelector('button[onclick="updateMetrics()"]');
-            if (btn) btn.disabled = true;
-            
-            console.log('--- Iniciando diagnóstico de métricas ---');
-            
-            for (const key of metrics) {
-                try {
-                    // La API de CounterAPI *requiere* una barra al final para lecturas, si no hace redirect y falla por CORS
-                    const url = `https://api.counterapi.dev/v1/axelongosite/${key}/?t=${Date.now()}`;
-                    const response = await fetch(url);
-                    
-                    const elementId = key === 'global_clicks' ? 'global-click-count' : `count-${key}`;
-                    const el = document.getElementById(elementId);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    if (el) {
-                        el.innerText = (data.count || 0).toLocaleString();
-                        el.classList.add('text-orange-500');
-                    }
-                    console.log(`OK [${key}]: ${data.count}`);
-                } catch (error) {
-                    console.warn(`FAIL [${key}]:`, error.message);
-                    const elementId = key === 'global_clicks' ? 'global-click-count' : `count-${key}`;
-                    const el = document.getElementById(elementId);
-                    if (el) {
-                        // Mostrar el error específico para diagnosticar
-                        el.innerText = error.message.includes('HTTP') ? error.message : 'Error Red';
-                        el.classList.add('text-red-500');
-                    }
-                }
-                // Delay de 100ms para evitar bloqueos por concurrencia
-                await new Promise(r => setTimeout(r, 100));
-            }
-
-            console.log('--- Diagnóstico completado ---');
-            if (btn) btn.disabled = false;
-        }
-
-        // Ya no llamamos a updateMetrics() automáticamente al final del archivo.
-        // Ahora se controla desde el sistema de Autenticación checkAuth() cuando es exitoso.
-        
-        // Intervalo de cada 60s se mantiene (pero la web no lo dispara si el panel se esconde... en realidad el iframe o timers ocultos seguirán pero al ser privados, está bien.)
+        // Intervalo de 60s solo si está autenticado
         setInterval(() => {
-            if (sessionStorage.getItem('dashboard_auth') === 'granted') {
-                updateMetrics();
-            }
+            if (sessionStorage.getItem('dashboard_auth') === 'granted') updateMetrics();
         }, 60000);
     </script>
 </body>
