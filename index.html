@@ -457,7 +457,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 		Desarrollamos sistemas digitales minimalistas que automatizan tus procesos, eliminan tareas y escalan tu empresa con éxito.	</p>
 
 
-<p class="has-text-align-left has-ast-global-color-3-color has-text-color" style="margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-bottom:0px"><br>-Diseño Web UX/UI Minimalista<br>-Automatización de Workflows<br>-Integración de CRM y RevOps<br>-Arquitectura de Servicios Cloud</p>
+<p class="has-text-align-left has-text-color" style="margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-bottom:0px;color: #000000 !important;"><br>-Diseño Web UX/UI Minimalista<br>-Automatización de Workflows<br>-Integración de CRM y RevOps<br>-Arquitectura de Servicios Cloud</p>
 
 <img src="./assets/uploads/2026/04/quita_estas_letras_202604161725.jpeg" 
      style="width: 100%; height: 200px; object-fit: cover; border-radius: 1.5rem; margin: 20px 0; display: block; box-shadow: 0 5px 15px rgba(0,0,0,0.05);" 
@@ -728,21 +728,31 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
         .grid-container { grid-template-columns: 1.1fr 0.9fr; gap: 50px; }
         .responsive-horizontal-img { aspect-ratio: 16 / 6 !important; }
 
-        /* Efectos Visuales Avanzados Desktop */
+        /* Estilos de Color Solicitados */
         .desktop-gradient-title {
-            background: linear-gradient(to right, #022031 60%, #ffffff 60%) !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25)) !important;
+            color: #f9a825 !important;
+            background: none !important;
+            -webkit-text-fill-color: initial !important;
+            filter: none !important;
         }
         .desktop-gradient-desc {
-            background: linear-gradient(to right, #444 60%, #ffffff 60%) !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.3)) !important;
+            color: #000000 !important;
+            background: none !important;
+            -webkit-text-fill-color: initial !important;
+            filter: none !important;
         }
+    }
+
+    /* Colores Globales de Texto en esta sección */
+    .wp-block-spectra-tabs-child-tabpanel h3, 
+    .wp-block-spectra-tabs-child-tabpanel .section-title {
+        color: #f9a825 !important;
+    }
+
+    .wp-block-spectra-tabs-child-tabpanel p,
+    .wp-block-spectra-tabs-child-tabpanel li,
+    .wp-block-spectra-tabs-child-tabpanel span {
+        color: #000000 !important;
     }
 
     /* --- COMPONENTES GLOBALES --- */
