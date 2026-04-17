@@ -820,19 +820,38 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
         }).catch(() => {});
     });
 
-    // 2. Auto-Scroll y Secuencia Automática de Servicios
+        // 2. Auto-Scroll y Secuencia Automática de Servicios (Orden Refinado)
     window.addEventListener('load', function() {
         const delays = {
             scroll: 3000,
-            step1: 3800, // Publicidad Digital
-            step2: 5800, // Asesoria de Marketing
-            step3: 7800  // Automatizacion y Diseño Web
+            step1: 3000, // Asesoria de Marketing (Inicia al llegar)
+            step2: 4000, // Publicidad Digital (1s después)
+            step3: 5000  // Automatizacion y Diseño Web (1s después)
         };
 
         setTimeout(function() {
             const targetSection = document.getElementById('seccion-servicios');
             if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, delays.scroll);
+
+        // Secuencia de clics (Orden solicitado: Marketing -> Publicidad -> Web)
+        setTimeout(() => {
+            const btn = document.querySelector('[data-tracker="cat_marketing"]');
+            if (btn) btn.click();
+        }, delays.step1);
+
+        setTimeout(() => {
+            const btn = document.querySelector('[data-tracker="cat_publicidad"]');
+            if (btn) btn.click();
+        }, delays.step2);
+
+        setTimeout(() => {
+            const btn = document.querySelector('[data-tracker="cat_web"]');
+            if (btn) btn.click();
+        }, delays.step3);
+    });
             }
         }, delays.scroll);
 
