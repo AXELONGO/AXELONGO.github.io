@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Datos - Privado</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JYJJ3DXFC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2JYJJ3DXFC');
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen font-sans">
+    
+    <!-- Nav / Header -->
+    <header class="bg-slate-900 border-b border-slate-800 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-chart-pie text-blue-500 text-2xl"></i>
+                <h1 class="text-xl font-bold text-white tracking-wide">Panel de Análisis Web</h1>
+            </div>
+            <div>
+                <a href="./index.html" class="text-sm font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 px-4 rounded-md transition border border-slate-700">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>Volver al Sitio
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Alerta de Looker Studio -->
+        <div class="bg-blue-900/40 border border-blue-800/60 rounded-xl p-5 mb-8 flex items-start gap-4 shadow-sm">
+            <div class="bg-blue-500/20 p-2 rounded-full mt-1">
+                <i class="fa-solid fa-info-circle text-blue-400 text-xl"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-blue-100 mb-1">Integra aquí tu Google Analytics 4</h3>
+                <p class="text-slate-300 text-sm leading-relaxed mb-3">
+                    Para visualizar las métricas oficiales en tiempo real en los paneles de abajo, debes conectar tu propiedad de Google Analytics a <a href="https://lookerstudio.google.com/" target="_blank" class="text-blue-400 hover:text-blue-300 underline underline-offset-2">Google Looker Studio</a>, personalizar el reporte como más te guste y pegar aquí abajo el código "Incrustar Informe".
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="inline-flex items-center bg-slate-800 border border-slate-700 rounded px-2.5 py-1 text-xs font-mono text-slate-400">
+                        Sitio: AXELONGO.github.io
+                    </span>
+                    <span class="inline-flex items-center bg-slate-800 border border-slate-700 rounded px-2.5 py-1 text-xs font-mono text-slate-400">
+                        Tag: G-2JYJJ3DXFC
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid (Simulación visual en espera del reporte real) -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden min-h-[600px] flex items-center justify-center relative">
+            
+            <!-- Aquí iría el Iframe de Looker Studio -->
+            <!-- Ejemplo: <iframe width="100%" height="800" src="TU_ENLACE_AQUI" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+            
+            <div class="text-center p-8 z-10 bg-slate-900/80 rounded-2xl backdrop-blur-sm border border-slate-800/50">
+                <i class="fa-brands fa-google text-slate-500 text-5xl mb-4 opacity-50"></i>
+                <h2 class="text-2xl text-slate-400 font-medium mb-2">Visor de Analíticas Apagado</h2>
+                <p class="text-slate-500 text-sm max-w-sm mx-auto">Reemplaza esta sección en tu código insertando el `&lt;iframe&gt;` oficial generado por tu reporte de Looker Studio.</p>
+            </div>
+
+            <!-- Fondo decorativo abstracto simulando gráficas -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#475569 2px, transparent 2px); background-size: 30px 30px;"></div>
+            <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-blue-900/10 to-transparent"></div>
+        </div>
+        
+    </main>
+
+</body>
+</html>
