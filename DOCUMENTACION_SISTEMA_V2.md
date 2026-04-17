@@ -1,7 +1,7 @@
 # Manual de Ingeniería y Arquitectura: Sistema AXELONGO v2.0
 ## Documentación Técnica Exhaustiva del Ecosistema Jamstack
 
-Este documento constituye la piedra angular del conocimiento técnico del proyecto. Detalla de forma minuciosa la construcción, interconexión, sistema de diseño y motor de métricas del sitio web estático alojado en GitHub Pages.
+Este documento constituye la piedra angular del conocimiento técnico del proyecto. Detalla de forma minuciosa la construcción, interconexión, sistema de diseño y motor de métricas del sitio web estático alojado en GitHub Pages. Actualizado a la versión 2.1.0 para reflejar optimizaciones de UI en el Dashboard y migración de métricas sociales.
 
 ---
 
@@ -48,7 +48,8 @@ Diseñada con un enfoque en la autoridad de marca. Hereda el sistema de estilos 
 
 ### 3.3. dashboard.html (El Cerebro Analítico)
 No es solo una página, es una aplicación SPA (Single Page Application) interna.
-*   **Consumo de API**: Utiliza un bucle asíncrono en JavaScript para consultar los "Namespaces" de CounterAPI cada 30 segundos.
+*   **Diseño Minimalista**: Se eliminaron tarjetas informativas redundantes (como la Info Card de GA4) para priorizar la visualización de los datos duros y botones de control directo.
+*   **Consumo de API Robusto**: Utiliza un bucle asíncrono secuencial con `Promise` y delays de 100ms para evitar bloqueos por Rate Limit de CounterAPI o falsos positivos de AdBlockers (Error 429 / Blocked by client).
 *   **Iframe Wrapper**: Encapsula el reporte de Looker Studio con parámetros de sandbox para asegurar que los datos de Google no se filtren ni rompan el diseño responsivo.
 
 ---
@@ -76,8 +77,9 @@ Este es el aspecto más complejo del sistema. La conexión no es lineal, sino di
 Es una API REST ligera diseñada para incrementos atómicos sin persistencia de servidor compleja.
 *   **Uso en el sitio**: Cada vez que un usuario interactúa con un elemento de interés (`data-tracker`), el navegador lanza una petición `GET` silenciosa.
 *   **Endpoint Maestro**: `https://api.counterapi.dev/v1/axelongosite/`
-*   **Funcionamiento**: Al añadir `/up` al final de la URL de una métrica (ej: `.../global_clicks/up`), el servidor de la API suma +1 al contador de forma instantánea. 
-*   **Implementación en Dashboard**: El dashboard consulta el valor actual sin incrementarlo (`GET` sin el `/up`).
+*   **Reglas Estrictas de URL (CORS / 301)**: Para escribir datos (incrementar), el endpoint **no debe** tener una barra final (`.../up`). Para leer datos sin incrementar, el endpoint **sí debe** tener una barra final antes de los parámetros (`.../nombre/?t=123`). Ignorar esto causa errores `301 Moved Permanently` que el navegador bloquea.
+*   **Inicialización**: Si un contador nuevo se añade (ej. Migración de X a WhatsApp `social_wa`), el sistema devuelve `HTTP 400` hasta que recibe su primer `/up`.
+*   **Implementación en Dashboard**: El dashboard consulta el valor de forma secuencial y usa un "Cache-Buster" (`?t=Date.now()`) para evadir el almacenamiento de memoria del navegador.
 
 ### API 2: n8n Webhook (demian405-n8n-free.hf.space)
 Actúa como un puente inteligente entre el sitio web y el almacenamiento de datos real (hojas de cálculo, CRMs, Telegram, etc).
@@ -182,5 +184,5 @@ Este ecosistema ha sido diseñado para ser autogestionable. La robustez de la se
 
 ---
 **Autoría**: Desarrollado y documentado por Antigravity AI Engine.
-**Versión**: 2.0.0
+**Versión**: 2.1.0 (Migración final limpia de UI social y estabilización API)
 **Fecha de última revisión**: 17 de Abril, 2026
