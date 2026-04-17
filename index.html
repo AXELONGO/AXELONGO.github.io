@@ -338,39 +338,14 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
         -webkit-text-fill-color: #000000 !important;
     }
 
-    /* 6. OCULTAR ICONOS DE CARRITO Y MENU EXTRA (ASTRA RESIDUES) */
-    .ast-site-header-cart, 
-    .ast-header-cart-container, 
-    .ast-cart-menu-wrap,
-    .ast-mobile-header-stack .ast-site-header-cart,
-    [data-section="section-header-mobile-trigger"] .ast-button-wrap .ast-mobile-menu-trigger-minimal[aria-label*="cart"],
-    .cart-container {
+    /* 6. OCULTAR ICONOS DE CARRITO Y MENU EXTRA */
+    .ast-site-header-cart, .ast-header-cart-container, .ast-cart-menu-wrap, .cart-container {
         display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        width: 0 !important;
-        height: 0 !important;
-        overflow: hidden !important;
-    }
-
-    /* 7. VIDEO BANNER RESPONSIVO */
-    .w-full.bg-white video {
-        width: 100% !important;
-        height: auto !important;
-        max-height: 50vh !important;
-        object-fit: cover !important;
-        background: #000; /* Fondo negro por si no carga */
     }
 
     @media (max-width: 921px) {
-        /* Ocultar cualquier texto residual de "cart" o "menu" que reporte el usuario */
-        .ast-header-cart-container, .ast-site-header-cart-li, .ast-site-header-cart-li * {
+        .ast-header-cart-container, .ast-site-header-cart-li {
             display: none !important;
-        }
-        .w-full.bg-white {
-            padding: 0 !important;
-            margin: 0 !important;
-            overflow: hidden !important;
         }
     }
 </style></head>
@@ -858,32 +833,22 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
 </script>
 	
 
-<!-- Banner Publicitario Final (Video) -->
-<div class="w-full bg-white">
-    <video autoplay muted loop playsinline class="w-full h-auto block object-cover" style="max-height: 400px; width: 100%;">
-        <source src="./sistema_web/assets/uploads/2026/04/banner-final.mov" >
-        Tu navegador no soporta el formato de video.
-    </video>
-</div>
+
 
 <!-- Tracker de Clics Global, Webhook n8n y Auto-Scroll -->
 <script>
     // 1. Rastreo de Clics (CounterAPI + Webhook n8n)
     document.addEventListener('click', function(e) {
-        // Ignorar el boton de envio del formulario ya que tiene su propia logica de webhook mas completa
         if (e.target.id === 'submit-btn') return;
-
         const target = e.target.closest('a.wp-block-button__link, button, .btn-orange-hover, [data-tracker]');
         if (!target) return;
 
-        // CounterAPI (Analytics)
         fetch('https://api.counterapi.dev/v1/axelongosite/global_clicks/up').catch(() => {});
         const trackerKey = target.getAttribute('data-tracker');
         if (trackerKey) {
             fetch(`https://api.counterapi.dev/v1/axelongosite/${trackerKey}/up`).catch(() => {});
         }
 
-        // Webhook n8n (Integracion)
         const payload = {
             event: "button_click",
             text: target.innerText.trim() || target.value || "Click",
@@ -900,56 +865,29 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
         }).catch(() => {});
     });
 
-        // 2. Auto-Scroll y Secuencia Automática de Servicios (Orden Refinado)
+    // 2. Auto-Scroll y Secuencia Automática de Servicios (Refinado 3s + 1s)
     window.addEventListener('load', function() {
-        const delays = {
-            scroll: 3000,
-            step1: 3000, // Asesoria de Marketing (Inicia al llegar)
-            step2: 4000, // Publicidad Digital (1s después)
-            step3: 5000  // Automatizacion y Diseño Web (1s después)
-        };
-
         setTimeout(function() {
             const targetSection = document.getElementById('seccion-servicios');
             if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
-        }, delays.scroll);
-
-        // Secuencia de clics (Orden solicitado: Marketing -> Publicidad -> Web)
-        setTimeout(() => {
-            const btn = document.querySelector('[data-tracker="cat_marketing"]');
-            if (btn) btn.click();
-        }, delays.step1);
-
-        setTimeout(() => {
-            const btn = document.querySelector('[data-tracker="cat_publicidad"]');
-            if (btn) btn.click();
-        }, delays.step2);
-
-        setTimeout(() => {
-            const btn = document.querySelector('[data-tracker="cat_web"]');
-            if (btn) btn.click();
-        }, delays.step3);
-    });
-            }
-        }, delays.scroll);
-
-        // Secuencia de clics para mostrar servicios
-        setTimeout(() => {
-            const btn = document.querySelector('[data-tracker="cat_publicidad"]');
-            if (btn) btn.click();
-        }, delays.step1);
+        }, 3000);
 
         setTimeout(() => {
             const btn = document.querySelector('[data-tracker="cat_marketing"]');
             if (btn) btn.click();
-        }, delays.step2);
+        }, 3000);
+
+        setTimeout(() => {
+            const btn = document.querySelector('[data-tracker="cat_publicidad"]');
+            if (btn) btn.click();
+        }, 4000);
 
         setTimeout(() => {
             const btn = document.querySelector('[data-tracker="cat_web"]');
             if (btn) btn.click();
-        }, delays.step3);
+        }, 5000);
     });
 </script>
 
