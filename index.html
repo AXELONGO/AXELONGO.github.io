@@ -843,10 +843,10 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
         const target = e.target.closest('a.wp-block-button__link, button, .btn-orange-hover, [data-tracker]');
         if (!target) return;
 
-        fetch('https://api.counterapi.dev/v1/axelongosite/global_clicks/up/').catch(() => {});
+        fetch('https://api.counterapi.dev/v1/axelongosite/global_clicks/up', { keepalive: true, mode: 'no-cors' }).catch(() => {});
         const trackerKey = target.getAttribute('data-tracker');
         if (trackerKey) {
-            fetch(`https://api.counterapi.dev/v1/axelongosite/${trackerKey}/up/`).catch(() => {});
+            fetch(`https://api.counterapi.dev/v1/axelongosite/${trackerKey}/up`, { keepalive: true, mode: 'no-cors' }).catch(() => {});
         }
 
         const payload = {
@@ -861,7 +861,8 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
         fetch('https://demian405-n8n-free.hf.space/webhook/Formulario', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
+            keepalive: true
         }).catch(() => {});
     });
 
