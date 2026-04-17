@@ -867,12 +867,7 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
 
     // 2. Auto-Scroll y Secuencia Automática de Servicios (4s inicial + 2.5s cada bloque)
     window.addEventListener('load', function() {
-        setTimeout(function() {
-            const targetSection = document.getElementById('seccion-servicios');
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        }, 4000);
+        
 
         // Paso 1: Asesoría de Marketing (Inicia a los 4s, dura 2.5s)
         setTimeout(() => {

@@ -94,7 +94,7 @@ graph LR
 ```
 
 ### Refinamientos Recientes (UX/Performance)
-*   **Auto-Scroll & Service Showcase (V2)**: Secuencia optimizada con 4 segundos de espera inicial (lectura de cabecera) y 2.5 segundos de exposición por cada bloque de servicio (Marketing → Publicidad → Web).
+*   **Service Showcase Sequence**: Secuencia automatizada que activa los bloques de servicios (Marketing → Publicidad → Web) para mostrar dinamismo sin forzar el desplazamiento del usuario.
 *   **Limpieza de Residuos de WordPress**: Eliminación automatizada de shortcodes residuales (`[sc_cart_menu_icon]`) y elementos de carrito en todas las páginas (`index.html`, `nosotros`, `blog`) para un acabado 100% Jamstack.
 *   **Optimización de Carga**: Eliminación del banner de video final pesado para priorizar la velocidad de carga en dispositivos móviles y la retención del usuario.
 
