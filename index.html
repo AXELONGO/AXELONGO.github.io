@@ -686,8 +686,8 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
 </script>
 	
 <!-- Login Button for Dashboard -->
-<a href="#" onclick="var user = prompt('Usuario:'); var pass = prompt('Contraseña:'); if(user==='axel' && pass==='axel123') { window.location.href='./dashboard.html'; } else if (user||pass) { alert('Datos incorrectos'); } return false;" style="position:fixed; bottom:24px; right:24px; z-index:9999; display:flex; align-items:center; gap:8px; background-color:#1e293b; color:white; font-family:sans-serif; font-weight:500; padding:12px 24px; border-radius:9999px; box-shadow:0 10px 25px -5px rgba(0,0,0,0.5); border:1px solid #334155; text-decoration:none; transition:all 0.2s;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 0h16v16H0z" fill="none"/><path d="M14 2H2v12h12V2zM4 12V4h2v8H4zm4 0V8h2v4H8zm4 0v-2h2v2h-2z"/></svg> 
+<a href="#" onclick="var user = prompt('Usuario:'); var pass = prompt('Contraseña:'); if(user==='axel' && pass==='axel123') { window.location.href='./dashboard.html'; } else if (user||pass) { alert('Datos incorrectos'); } return false;" class="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[9999] flex items-center gap-2 bg-[#1e293b] hover:bg-[#334155] text-white font-sans font-medium text-xs md:text-base px-5 py-3 md:px-6 md:py-4 rounded-full shadow-2xl border border-[#334155] transition-all duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="w-4 h-4 md:w-5 md:h-5"><path d="M0 0h16v16H0z" fill="none"/><path d="M14 2H2v12h12V2zM4 12V4h2v8H4zm4 0V8h2v4H8zm4 0v-2h2v2h-2z"/></svg> 
     Mis datos
 </a>
 
