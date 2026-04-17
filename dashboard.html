@@ -18,65 +18,88 @@
       gtag('config', 'G-2JYJJ3DXFC');
     </script>
 </head>
-<body class="bg-slate-950 text-slate-200 min-h-screen font-sans">
+<body class="bg-slate-950 text-slate-200 min-h-screen font-sans selection:bg-blue-500/30">
     
     <!-- Nav / Header -->
-    <header class="bg-slate-900 border-b border-slate-800 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-chart-pie text-blue-500 text-2xl"></i>
-                <h1 class="text-xl font-bold text-white tracking-wide">Panel de Análisis Web</h1>
+    <header class="bg-slate-900/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="bg-blue-600/20 p-2 rounded-lg">
+                    <i class="fa-solid fa-chart-pie text-blue-500 text-lg sm:text-2xl"></i>
+                </div>
+                <h1 class="text-base sm:text-xl font-bold text-white tracking-tight truncate max-w-[150px] sm:max-w-none">Panel de Análisis</h1>
             </div>
             <div>
-                <a href="./index.html" class="text-sm font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 px-4 rounded-md transition border border-slate-700">
-                    <i class="fa-solid fa-arrow-left mr-2"></i>Volver al Sitio
+                <a href="./index.html" class="text-xs sm:text-sm font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 px-3 sm:px-4 rounded-full transition-all border border-slate-700 active:scale-95 flex items-center gap-2">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="hidden xs:inline">Inicio</span>
                 </a>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         
-        <!-- Alerta de Looker Studio -->
-        <div class="bg-blue-900/40 border border-blue-800/60 rounded-xl p-5 mb-8 flex items-start gap-4 shadow-sm">
-            <div class="bg-blue-500/20 p-2 rounded-full mt-1">
-                <i class="fa-solid fa-info-circle text-blue-400 text-xl"></i>
-            </div>
-            <div>
-                <h3 class="text-lg font-semibold text-blue-100 mb-1">Integra aquí tu Google Analytics 4</h3>
-                <p class="text-slate-300 text-sm leading-relaxed mb-3">
-                    Para visualizar las métricas oficiales en tiempo real en los paneles de abajo, debes conectar tu propiedad de Google Analytics a <a href="https://lookerstudio.google.com/" target="_blank" class="text-blue-400 hover:text-blue-300 underline underline-offset-2">Google Looker Studio</a>, personalizar el reporte como más te guste y pegar aquí abajo el código "Incrustar Informe".
-                </p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="inline-flex items-center bg-slate-800 border border-slate-700 rounded px-2.5 py-1 text-xs font-mono text-slate-400">
-                        Sitio: AXELONGO.github.io
-                    </span>
-                    <span class="inline-flex items-center bg-slate-800 border border-slate-700 rounded px-2.5 py-1 text-xs font-mono text-slate-400">
-                        Tag: G-2JYJJ3DXFC
-                    </span>
+        <!-- Info Card -->
+        <div class="bg-gradient-to-br from-blue-900/30 to-slate-900 border border-blue-800/40 rounded-2xl p-4 sm:p-6 mb-8 shadow-2xl overflow-hidden relative group">
+            <div class="absolute -right-4 -top-4 bg-blue-500/10 w-24 h-24 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all"></div>
+            
+            <div class="relative flex flex-col sm:flex-row items-start gap-4">
+                <div class="bg-blue-500/10 p-3 rounded-xl">
+                    <i class="fa-solid fa-circle-info text-blue-400 text-xl"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-bold text-white mb-2 leading-tight">Implementación de Métricas GA4</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4 max-w-3xl">
+                        Para visualizar tus gráficas reales aquí, crea un reporte en <a href="https://lookerstudio.google.com/" target="_blank" class="text-blue-400 font-semibold hover:underline">Looker Studio</a> y pega el <b>ID del informe</b> o el <b>Iframe de inserción</b> en el código de este archivo.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <div class="flex items-center gap-1.5 bg-slate-950/50 border border-slate-800 rounded-lg px-3 py-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-[10px] sm:text-xs font-mono text-slate-400">G-2JYJJ3DXFC</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-slate-950/50 border border-slate-800 rounded-lg px-3 py-1.5">
+                            <i class="fa-solid fa-link text-[10px] text-slate-500"></i>
+                            <span class="text-[10px] sm:text-xs font-mono text-slate-400">AXELONGO.github.io</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Dashboard Grid (Simulación visual en espera del reporte real) -->
-        <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl overflow-hidden min-h-[600px] flex items-center justify-center relative">
+        <!-- Dashboard Container (Responsive Iframe Wrapper) -->
+        <div class="bg-slate-900 rounded-3xl border border-slate-800 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden relative group">
             
-            <!-- Aquí iría el Iframe de Looker Studio -->
-            <!-- Ejemplo: <iframe width="100%" height="800" src="TU_ENLACE_AQUI" frameborder="0" style="border:0" allowfullscreen></iframe> -->
-            
-            <div class="text-center p-8 z-10 bg-slate-900/80 rounded-2xl backdrop-blur-sm border border-slate-800/50">
-                <i class="fa-brands fa-google text-slate-500 text-5xl mb-4 opacity-50"></i>
-                <h2 class="text-2xl text-slate-400 font-medium mb-2">Visor de Analíticas Apagado</h2>
-                <p class="text-slate-500 text-sm max-w-sm mx-auto">Reemplaza esta sección en tu código insertando el `&lt;iframe&gt;` oficial generado por tu reporte de Looker Studio.</p>
+            <!-- CONTENEDOR DE CARGA / PLACEHOLDER -->
+            <div class="min-h-[400px] sm:min-h-[600px] md:min-h-[750px] w-full flex items-center justify-center p-6 text-center">
+                
+                <!-- Este es el lugar donde insertarás el Iframe -->
+                <!-- <iframe width="100%" height="750" src="..." frameborder="0" style="border:0" allowfullscreen></iframe> -->
+
+                <div class="space-y-4 max-w-md mx-auto">
+                    <div class="inline-block p-4 bg-slate-950 rounded-2xl border border-slate-800 mb-2">
+                        <i class="fa-brands fa-google text-slate-600 text-4xl sm:text-6xl animate-pulse"></i>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white">Visor en espera</h2>
+                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                        Estamos listos para recibir tus datos. Reemplaza este bloque de texto en tu archivo <code>dashboard.html</code> por el código <code>&lt;iframe&gt;</code> de Looker Studio.
+                    </p>
+                </div>
             </div>
 
-            <!-- Fondo decorativo abstracto simulando gráficas -->
-            <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#475569 2px, transparent 2px); background-size: 30px 30px;"></div>
-            <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-blue-900/10 to-transparent"></div>
+            <!-- Efectos Estéticos -->
+            <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-blue-900/20 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');"></div>
         </div>
+        
+        <!-- Footer de Soporte -->
+        <footer class="mt-8 text-center">
+            <p class="text-[10px] sm:text-xs text-slate-600 uppercase tracking-widest font-bold">Secure Dashboard System v1.0</p>
+        </footer>
         
     </main>
 
 </body>
 </html>
+
