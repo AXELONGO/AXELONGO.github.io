@@ -523,7 +523,38 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 
         <div class="form-container">
             <h2 class="section-title" style="text-align: left !important; font-size: 2rem !important;">Trabajemos juntos</h2>
-            <form id="contact-form" action="https://demian405-n8n-free.hf.space/webhook/Formulario" method="POST">
+            
+<style>
+    /* ESTILO DE EMERGENCIA PARA BOTON ENVIAR - SOBREESCRIBE TODO */
+    #submit-btn.form-submit-btn {
+        display: block !important;
+        width: auto !important;
+        min-width: 300px !important;
+        padding: 25px 80px !important;
+        background-color: #f9a825 !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 100px !important;
+        font-weight: 800 !important;
+        font-size: 1.8rem !important;
+        text-align: center !important;
+        margin: 40px auto 10px auto !important;
+        cursor: pointer !important;
+        text-transform: uppercase !important;
+        box-shadow: 0 10px 20px rgba(249, 168, 37, 0.3) !important;
+        transition: none !important; /* ELIMINAMOS TODO ZOOM O MOVIMIENTO */
+        transform: none !important;
+    }
+    #submit-btn.form-submit-btn:hover {
+        background-color: #e69522 !important;
+        transform: none !important;
+        box-shadow: 0 10px 20px rgba(249, 168, 37, 0.4) !important;
+    }
+    #submit-btn.form-submit-btn:active {
+        transform: scale(0.98) !important; /* Un pequeno clic pero sin zoom */
+    }
+</style>
+<form id="contact-form" action="https://demian405-n8n-free.hf.space/webhook/Formulario" method="POST">
                 <label>Nombre</label>
                 <input type="text" name="nombre" required>
 
