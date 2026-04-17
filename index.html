@@ -446,31 +446,30 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 
 
 	<h3 data-spectra-id="spectra-5a0bdbe2-962d-49c8-b84d-aaf743584f9d" 
-        class="has-text-color has-link-color spectra-text-color wp-elements-a6132ca4e06a9a4f075b216188ba636c wp-block-spectra-content has-text-color"
-        style="background: linear-gradient(to right, #022031 60%, #ffffff 60%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; width: 100%; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));">
+        class="has-text-color has-link-color spectra-text-color wp-elements-a6132ca4e06a9a4f075b216188ba636c wp-block-spectra-content has-text-color desktop-gradient-title"
+        style="width: 100%;">
 		Automatizaciones y diseño web	</h3>
 
 
 	<p data-spectra-id="spectra-7364919c-3343-470c-b307-71176dd48de5" 
-       class="has-text-color spectra-text-color wp-block-spectra-content has-text-color"
-       style="background: linear-gradient(to right, #444 60%, #ffffff 60%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; width: 100%; max-width: 90%; filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.4));">
+       class="has-text-color spectra-text-color wp-block-spectra-content has-text-color desktop-gradient-desc"
+       style="width: 100%; max-width: 90%;">
 		Desarrollamos sistemas digitales minimalistas que automatizan tus procesos, eliminan tareas y escalan tu empresa con éxito.	</p>
 
 
 <p class="has-text-align-left has-ast-global-color-3-color has-text-color" style="margin-top:0;margin-right:0;margin-bottom:0;margin-left:0;padding-bottom:0px"><br>-Diseño Web UX/UI Minimalista<br>-Automatización de Workflows<br>-Integración de CRM y RevOps<br>-Arquitectura de Servicios Cloud</p>
 
-<div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex" style="margin-top: 25px; position: relative; z-index: 2;">
+<img src="./assets/uploads/2026/04/quita_estas_letras_202604161725.jpeg" 
+     style="width: 100%; height: 200px; object-fit: cover; border-radius: 1.5rem; margin: 20px 0; display: block; box-shadow: 0 5px 15px rgba(0,0,0,0.05);" 
+     alt="Diseño web">
+
+<div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex" style="margin-top: 5px; position: relative; z-index: 2;">
     <div class="wp-block-button is-style-outline">
         <a class="wp-block-button__link wp-element-button btn-orange-hover" href="#" style="border-radius: 50px; padding: 12px 30px; border: 2px solid #f9a825; color: #f9a825; font-weight: 600; text-decoration: none; transition: all 0.3s ease;">Saber mas</a>
     </div>
 </div>
 
 </div>
-
-<img src="./assets/uploads/2026/04/quita_estas_letras_202604161725.jpeg" 
-     style="position: absolute; bottom: 0; right: 0; width: 40%; height: auto; border-radius: 0 0 2rem 0; opacity: 0.9; pointer-events: none; z-index: 0;" 
-     alt="Diseño web">
-
 </div>
 
 </div>
@@ -709,6 +708,24 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
     .btn-orange-hover:hover {
         background: #f9a825 !important;
         color: white !important;
+    }
+
+    /* Estilo de texto con gradiente solo para desktop */
+    @media (min-width: 1024px) {
+        .desktop-gradient-title {
+            background: linear-gradient(to right, #022031 60%, #ffffff 60%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+        }
+        .desktop-gradient-desc {
+            background: linear-gradient(to right, #444 60%, #ffffff 60%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.4));
+        }
     }
 </style>
 
