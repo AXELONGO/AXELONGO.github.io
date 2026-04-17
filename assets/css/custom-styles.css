@@ -42,16 +42,19 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
 /* Botón Enviar (Contacto) - REPARACIÓN FINAL */
 /* Botón Enviar (Contacto) - REPARACIÓN FINAL */
 .form-submit-btn, button[type="submit"] {
-    display: block !important;
-    width: 250px !important;
-    height: auto !important;
-    padding: 22px 0px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 350px !important;
+    min-height: 80px !important;
+    padding: 20px 40px !important;
     border: 3px solid #f9a825 !important;
     color: #f9a825 !important;
     background: #ffffff !important;
     border-radius: 100px !important;
     font-weight: 800 !important;
-    font-size: 1.5rem !important;
+    font-size: 1.8rem !important;
     text-align: center !important;
     margin: 40px auto 20px auto !important;
     cursor: pointer !important;
