@@ -843,10 +843,10 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
         const target = e.target.closest('a.wp-block-button__link, button, .btn-orange-hover, [data-tracker]');
         if (!target) return;
 
-        fetch('https://api.counterapi.dev/v1/axelongosite/global_clicks/up').catch(() => {});
+        fetch('https://api.counterapi.dev/v1/axelongosite/global_clicks/up/').catch(() => {});
         const trackerKey = target.getAttribute('data-tracker');
         if (trackerKey) {
-            fetch(`https://api.counterapi.dev/v1/axelongosite/${trackerKey}/up`).catch(() => {});
+            fetch(`https://api.counterapi.dev/v1/axelongosite/${trackerKey}/up/`).catch(() => {});
         }
 
         const payload = {
