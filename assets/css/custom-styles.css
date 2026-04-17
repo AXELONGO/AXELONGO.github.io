@@ -85,3 +85,11 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
         filter: none !important;
     }
 }
+
+/* Formularios más redondeados */
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+    border-radius: 12px !important;
+}
