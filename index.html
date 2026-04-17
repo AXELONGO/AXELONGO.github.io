@@ -197,41 +197,47 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
   gtag('config', 'G-2JYJJ3DXFC');
 </script>
 
+
 <style id="force-orange-titles">
-    /* TITULOS NARANJAS (SOLO ENCABEZADOS RELEVANTES) */
-    h1, h2, h3, h4, h5, h6,
+    /* 1. TITULOS CENTRALES EN NARANJA */
+    /* Excluimos explicitamente los que esten dentro de la lista de pestañas (mano izquierda) */
+    h1:not([role="tablist"] *), 
+    h2:not([role="tablist"] *), 
+    h3:not([role="tablist"] *), 
+    h4:not([role="tablist"] *), 
+    h5:not([role="tablist"] *), 
+    h6:not([role="tablist"] *),
     .section-title,
     .wp-block-heading,
-    .desktop-gradient-title,
-    .spectra-heading,
-    .uagb-toc__title {
+    .desktop-gradient-title {
         color: #f9a825 !important;
         -webkit-text-fill-color: #f9a825 !important;
         background-image: none !important;
     }
 
-    /* TEXTOS DESCRIPTIVOS Y BOTONES DE TABS A NEGRO */
-    p, li, span, 
-    .wp-block-spectra-content, 
-    .spectra-button__link,
-    .wp-block-spectra-tabs-child-tab-button div {
+    /* 2. TITULOS DE MANO IZQUIERDA (TABS) EN NEGRO */
+    [role="tablist"] .spectra-button__link,
+    [role="tablist"] button,
+    [role="tablist"] div {
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
-        background-image: none !important;
     }
 
-    /* EXCEPCION: El boton de enviar formulario debe seguir siendo blanco sobre naranja */
+    /* 3. TEXTO DE LOS BOTONES (SABER MAS / ENVIAR) EN NEGRO PARA VISIBILIDAD */
+    .wp-block-button__link, 
+    .btn-orange-hover,
     #submit-btn.form-submit-btn {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
     }
-    
-    /* EXCEPCION: Los botones de "Saber mas" deben seguir siendo blancos sobre naranja */
-    .btn-orange-hover, .wp-block-button__link {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
+
+    /* 4. PARRAFOS Y TEXTO GENERAL EN NEGRO */
+    p, li, span, .desktop-gradient-desc {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
     }
 </style>
+
 </head>
 
 <body itemtype="https://schema.org/WebPage" itemscope="itemscope" class="home wp-singular page-template-default page page-id-43 wp-embed-responsive wp-theme-astra ast-desktop ast-plain-container ast-no-sidebar astra-4.13.0 ast-single-post ast-inherit-site-logo-transparent ast-theme-transparent-header ast-hfb-header ast-full-width-primary-header">
