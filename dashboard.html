@@ -201,37 +201,51 @@
         ];
 
         async function updateMetrics() {
-            console.log('--- Iniciando actualización de métricas ---');
+            const btn = document.querySelector('button[onclick="updateMetrics()"]');
+            if (btn) btn.disabled = true;
             
-            // Peticiones en paralelo para mayor velocidad y robustez
-            const fetchPromises = metrics.map(async (key) => {
+            console.log('--- Iniciando diagnóstico de métricas ---');
+            
+            for (const key of metrics) {
                 try {
-                    const response = await fetch(`https://api.counterapi.dev/v1/axelongosite/${key}/?t=${Date.now()}`);
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    const data = await response.json();
+                    // Limpieza de URL: quitar barra redundante antes de ?t=
+                    const url = `https://api.counterapi.dev/v1/axelongosite/${key}?t=${Date.now()}`;
+                    const response = await fetch(url);
                     
                     const elementId = key === 'global_clicks' ? 'global-click-count' : `count-${key}`;
                     const el = document.getElementById(elementId);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
                     if (el) {
                         el.innerText = (data.count || 0).toLocaleString();
                         el.classList.add('text-orange-500');
                     }
-                    console.log(`Métrica [${key}]: ${data.count}`);
+                    console.log(`OK [${key}]: ${data.count}`);
                 } catch (error) {
-                    console.warn(`Error en métrica [${key}]:`, error.message);
+                    console.warn(`FAIL [${key}]:`, error.message);
                     const elementId = key === 'global_clicks' ? 'global-click-count' : `count-${key}`;
                     const el = document.getElementById(elementId);
-                    if (el && el.innerText === '0') el.innerText = 'Error';
+                    if (el) {
+                        // Mostrar el error específico para diagnosticar
+                        el.innerText = error.message.includes('HTTP') ? error.message : 'Error Red';
+                        el.classList.add('text-red-500');
+                    }
                 }
-            });
+                // Delay de 100ms para evitar bloqueos por concurrencia
+                await new Promise(r => setTimeout(r, 100));
+            }
 
-            await Promise.allSettled(fetchPromises);
-            console.log('--- Actualización completada ---');
+            console.log('--- Diagnóstico completado ---');
+            if (btn) btn.disabled = false;
         }
 
         // Actualizar al cargar
         updateMetrics();
-        // Actualizar cada 60 segundos (para evitar Rate Limiting de 30req/min)
+        // Cada 60s
         setInterval(updateMetrics, 60000);
     </script>
 
