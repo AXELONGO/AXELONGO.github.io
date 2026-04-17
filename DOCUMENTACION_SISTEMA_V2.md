@@ -68,25 +68,43 @@ Se utilizan fuentes de sistema (San Francisco en Mac, Segoe UI en Windows) para 
 
 ---
 
-## 5. El Motor de Métricas (Data Architecture)
+## 5. El Motor de Métricas (Data Architecture - API Stack)
 
-Este es el aspecto más complejo del sistema. La conexión no es lineal, sino distribuida:
+Este es el aspecto más complejo del sistema. La conexión no es lineal, sino distribuida a través de tres capas de APIs externas:
 
-### 5.1. Nivel 1: CounterAPI (Rastreo Cuantitativo)
-Cada clic en un botón importante activa un pequeño pulso hacia `api.counterapi.dev`. 
-*   **Flujo**: Clic → Fetch API → Almacenamiento rápido.
-*   **Ventaja**: No requiere cookies ni consentimiento de GDPR complejo, ya que solo cuenta números.
+### API 1: CounterAPI (api.counterapi.dev)
+Es una API REST ligera diseñada para incrementos atómicos sin persistencia de servidor compleja.
+*   **Uso en el sitio**: Cada vez que un usuario interactúa con un elemento de interés (`data-tracker`), el navegador lanza una petición `GET` silenciosa.
+*   **Endpoint Maestro**: `https://api.counterapi.dev/v1/axelongosite/`
+*   **Funcionamiento**: Al añadir `/up` al final de la URL de una métrica (ej: `.../global_clicks/up`), el servidor de la API suma +1 al contador de forma instantánea. 
+*   **Implementación en Dashboard**: El dashboard consulta el valor actual sin incrementarlo (`GET` sin el `/up`).
 
-### 5.2. Nivel 2: n8n Webhook (Rastreo Cualitativo)
-Para entender *quién* hace clic y *desde dónde*, se envía un objeto JSON a un servidor de integración.
-*   **Datos capturados**: Texto del botón, ID del elemento, URL de la página, Marca de tiempo.
-*   **Conexión**: El sitio dispara un `POST` asíncrono que llega al CRM o base de datos de n8n.
+### API 2: n8n Webhook (demian405-n8n-free.hf.space)
+Actúa como un puente inteligente entre el sitio web y el almacenamiento de datos real (hojas de cálculo, CRMs, Telegram, etc).
+*   **Uso en el sitio**: Se utiliza en dos puntos críticos:
+    1.  **Envío de Formulario**: Captura los datos de contacto del lead.
+    2.  **Rastreo Cualitativo**: Envía un JSON completo con el contexto del clic (ID, texto del botón, hora, URL).
+*   **Payload (JSON)**:
+    ```json
+    {
+      "event": "button_click",
+      "text": "Texto del Botón",
+      "id": "generic",
+      "page_url": "...",
+      "timestamp": "ISO-Date"
+    }
+    ```
+*   **Ventaja**: Permite procesar los datos antes de guardarlos (limpieza, alertas, distribución).
 
-### 5.3. Nivel 3: Google Analytics 4 (Rastreo de Comportamiento)
-Inyectado vía `G-2JYJJ3DXFC`. Mide sesiones, rebote y geolocalización de forma tradicional.
+### API 3: Google Analytics 4 (gtag.js)
+API de telemetría de comportamiento masivo de Google.
+*   **Uso**: Inyectada en el `<head>` de todas las páginas a través del ID `G-2JYJJ3DXFC`.
+*   **Función**: Genera el mapa de calor, tiempo de estancia, tasa de rebote y segmentación geográfica.
+*   **Integración**: Sus datos alimentan directamente al reporte de Looker Studio embebido en el dashboard.
 
-### 5.4. Integración Final: Looker Studio
-Toma los datos de GA4 y los presenta visualmente en el dashboard, cerrando el ciclo de retroalimentación de marketing.
+### API 4: Looker Studio Embed API
+Aunque se presenta como un IFRAME, utiliza la API de Google para asegurar que el contenido se cargue con los permisos correctos (`allow-storage-access-by-user-activation`).
+*   **Sandbox**: Implementamos restricciones de seguridad para que el reporte no interfiera con el resto del sitio, pero permitiendo la interacción táctil.
 
 ---
 
