@@ -48,7 +48,7 @@ Diseñada con un enfoque en la autoridad de marca. Hereda el sistema de estilos 
 
 ### 3.3. dashboard.html (El Cerebro Analítico)
 No es solo una página, es una aplicación SPA (Single Page Application) interna.
-*   **Diseño Minimalista**: Se eliminaron tarjetas informativas redundantes (como la Info Card de GA4) para priorizar la visualización de los datos duros y botones de control directo.
+*   **Diseño Minimalista**: Se eliminaron las tarjetas globales (Clics Totales, Kaizen) y la tarjeta informativa de GA4 a petición del cliente, consolidando el diseño para mostrar única y directamente los KPIs críticos (Redes Sociales y Portafolio).
 *   **Consumo de API Robusto**: Utiliza un bucle asíncrono secuencial con `Promise` y delays de 100ms para evitar bloqueos por Rate Limit de CounterAPI o falsos positivos de AdBlockers (Error 429 / Blocked by client).
 *   **Iframe Wrapper**: Encapsula el reporte de Looker Studio con parámetros de sandbox para asegurar que los datos de Google no se filtren ni rompan el diseño responsivo.
 
@@ -184,5 +184,5 @@ Este ecosistema ha sido diseñado para ser autogestionable. La robustez de la se
 
 ---
 **Autoría**: Desarrollado y documentado por Antigravity AI Engine.
-**Versión**: 2.1.0 (Migración final limpia de UI social y estabilización API)
+**Versión**: 2.2.0 (Eliminación de Globales y Limpieza absoluta de interfaz)
 **Fecha de última revisión**: 17 de Abril, 2026
