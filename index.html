@@ -739,13 +739,13 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
 <script>
     document.addEventListener('click', function(e) {
         // 1. Contador Global de Clics
-        fetch('https://api.countapi.xyz/hit/axelongosite/global_clicks').catch(() => {});
+        fetch('https://api.counterapi.dev/v1/axelongosite/global_clicks/up').catch(() => {});
 
         // 2. Contador Individual (basado en data-tracker)
         const trackerElement = e.target.closest('[data-tracker]');
         if (trackerElement) {
             const key = trackerElement.getAttribute('data-tracker');
-            fetch(`https://api.countapi.xyz/hit/axelongosite/${key}`).catch(() => {});
+            fetch(`https://api.counterapi.dev/v1/axelongosite/${key}/up`).catch(() => {});
         }
     });
 </script>
