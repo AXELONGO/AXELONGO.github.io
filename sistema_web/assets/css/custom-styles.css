@@ -1,6 +1,6 @@
 /* --- DISEÑO BASE Y COLORES --- */
-h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
-    color: #ff8c00 !important;
+h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title, .spectra-button__link, .desktop-gradient-title {
+    color: #f9a825 !important;
 }
 
 .section-title {
@@ -117,4 +117,16 @@ label {
     display: block !important;
     margin-bottom: 8px !important;
     font-weight: 600 !important;
+}
+
+/* Cobertura total para asegurar que TODO titulo sea naranja */
+h1, h2, h3, h4, h5, h6, 
+h1 *, h2 *, h3 *, h4 *, h5 *, h6 *,
+.wp-block-heading, 
+.wp-block-heading *,
+.section-title, 
+.section-title *,
+.desktop-gradient-title,
+.spectra-heading {
+    color: #f9a825 !important;
 }
