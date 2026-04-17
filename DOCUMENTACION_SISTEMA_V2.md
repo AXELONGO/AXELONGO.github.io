@@ -1,188 +1,216 @@
-# Manual de Ingeniería y Arquitectura: Sistema AXELONGO v2.0
+# Manual de Ingeniería y Arquitectura: Sistema AXELONGO v3.0
 ## Documentación Técnica Exhaustiva del Ecosistema Jamstack
 
-Este documento constituye la piedra angular del conocimiento técnico del proyecto. Detalla de forma minuciosa la construcción, interconexión, sistema de diseño y motor de métricas del sitio web estático alojado en GitHub Pages. Actualizado a la versión 2.1.0 para reflejar optimizaciones de UI en el Dashboard y migración de métricas sociales.
+> **Versión:** 3.0.0 — Actualizada el 17 de Abril, 2026  
+> **Autoría:** Desarrollado y documentado por Antigravity AI Engine  
+> **Repositorio:** `AXELONGO/AXELONGO.github.io` (rama `main`)
 
 ---
 
 ## 1. Introducción y Filosofía del Desarrollo
 
-El sistema está construido bajo la filosofía **Jamstack** (JavaScript, API y Markup). A diferencia de los sitios tradicionales monolíticos (como WordPress), este ecosistema separa completamente la capa de presentación de la capa de datos.
+El sistema está construido bajo la filosofía **Jamstack** (JavaScript, API y Markup). A diferencia de los sitios tradicionales monolíticos, este ecosistema separa completamente la capa de presentación de la capa de datos.
 
-### Objetivos Clave:
-*   **Performance Extremo**: Carga instantánea al no depender de una base de datos distribuida en tiempo real.
-*   **Seguridad Total**: Al ser archivos estáticos (.html), no hay vectores de ataque de inyección SQL ni vulnerabilidades de servidor.
-*   **Escalabilidad Infinita**: Servido directamente desde la CDN de GitHub, soportando picos de tráfico de miles de usuarios sin latencia.
+- **Performance Extremo**: Carga instantánea al servirse desde la CDN de GitHub Pages.
+- **Seguridad Total**: Al ser archivos estáticos `.html`, no hay vectores de ataque de inyección SQL.
+- **Escalabilidad Infinita**: GitHub CDN absorbe picos de tráfico sin latencia adicional.
 
 ---
 
 ## 2. Mapa Estructural de la Aplicación
 
-La jerarquía de archivos ha sido diseñada para una mantenibilidad a largo plazo, separando el núcleo del sistema de las páginas de contenido.
-
-### 2.1. Directorio Raíz (`/`)
-*   `index.html`: Controlador maestro y landing page principal. Contiene el motor de rastreo y la secuencia de servicios.
-*   `dashboard.html`: Interfaz privada de visualización de KPI. Conecta con CounterAPI y Looker Studio.
-*   `DOCUMENTACION_DESARROLLADOR.md`: Resumen técnico rápido.
-
-### 2.2. Ecosistema de Páginas (`/paginas/`)
-Cada subpágina vive en su propio directorio para generar URLs amigables (ej: `/nosotros/` en lugar de `nosotros.html`).
-*   `/nosotros/index.html`: Página de identidad corporativa. Limpia de residuos de PHP.
-*   `/blog/index.html`: Módulo de contenidos. Estructurado para SEO semántico.
-
-### 2.3. Núcleo de Recursos (`/sistema_web/`)
-*   `/assets/`: Carpeta central de multimedia (uploads/) y estilos (css/ - aunque los estilos críticos están inyectados en el header para evitar render-blocking).
-*   `/core/`: Contiene los archivos JS esenciales extraídos de la migración de Astra, necesarios para funciones de diseño específicas.
-
----
-
-## 3. Desglose Funcional de Componentes
-
-### 3.1. index.html (La Central de Conversión)
-Es la página con mayor carga lógica. Su función es "Vender" y "Medir".
-*   **Header Dinámico**: Navegación responsiva con eliminación forzada de elementos de carrito (E-commerce desactivado para priorizar Leads).
-*   **Sección de Servicios**: Utiliza un sistema de pestañas (Tabs) que reaccionan a clics por ID.
-
-### 3.2. nosotros/index.html
-Diseñada con un enfoque en la autoridad de marca. Hereda el sistema de estilos del index pero mantiene un DOM más ligero para facilitar la lectura.
-
-### 3.3. dashboard.html (El Cerebro Analítico)
-No es solo una página, es una aplicación SPA (Single Page Application) interna.
-*   **Diseño Minimalista**: Se eliminaron las tarjetas globales (Clics Totales, Kaizen) y la tarjeta informativa de GA4 a petición del cliente, consolidando el diseño para mostrar única y directamente los KPIs críticos (Redes Sociales y Portafolio).
-*   **Consumo de API Robusto**: Utiliza un bucle asíncrono secuencial con `Promise` y delays de 100ms para evitar bloqueos por Rate Limit de CounterAPI o falsos positivos de AdBlockers (Error 429 / Blocked by client).
-*   **Iframe Wrapper**: Encapsula el reporte de Looker Studio con parámetros de sandbox para asegurar que los datos de Google no se filtren ni rompan el diseño responsivo.
-
----
-
-## 4. Sistema de Diseño y Estética Premium
-
-El diseño sigue una línea **High-End Marketing**, utilizando una paleta de colores psicológica diseñada para la acción.
-
-### 4.1. El Método "Force Orange Titles"
-Para evitar la inconsistencia de los temas generados automáticamente, se implementó un bloque CSS inyectado que utiliza selectores de alta especificidad (`!important`):
-*   **Títulos Centrales**: Naranja (#f9a825) para captar la atención del ojo.
-*   **Textos de Lectura**: Negro Puro (#000000) para maximizar el contraste y reducir la fatiga visual.
-*   **Botones**: Estilo "Píldora" con bordes redondeados y texto negro, optimizados para clics táctiles en móviles.
-
-### 4.2. Tipografía y Espaciado
-Se utilizan fuentes de sistema (San Francisco en Mac, Segoe UI en Windows) para eliminar el tiempo de carga de Google Fonts, asegurando que el texto aparezca instantáneamente.
-
----
-
-## 5. El Motor de Métricas (Data Architecture - API Stack)
-
-Este es el aspecto más complejo del sistema. La conexión no es lineal, sino distribuida a través de tres capas de APIs externas:
-
-### API 1: CounterAPI (api.counterapi.dev)
-Es una API REST ligera diseñada para incrementos atómicos sin persistencia de servidor compleja.
-*   **Uso en el sitio**: Cada vez que un usuario interactúa con un elemento de interés (`data-tracker`), el navegador lanza una petición `GET` silenciosa.
-*   **Endpoint Maestro**: `https://api.counterapi.dev/v1/axelongosite/`
-*   **Reglas Estrictas de URL (CORS / 301)**: Para escribir datos (incrementar), el endpoint **no debe** tener una barra final (`.../up`). Para leer datos sin incrementar, el endpoint **sí debe** tener una barra final antes de los parámetros (`.../nombre/?t=123`). Ignorar esto causa errores `301 Moved Permanently` que el navegador bloquea.
-*   **Inicialización**: Si un contador nuevo se añade (ej. Migración de X a WhatsApp `social_wa`), el sistema devuelve `HTTP 400` hasta que recibe su primer `/up`.
-*   **Implementación en Dashboard**: El dashboard consulta el valor de forma secuencial y usa un "Cache-Buster" (`?t=Date.now()`) para evadir el almacenamiento de memoria del navegador.
-
-### API 2: n8n Webhook (demian405-n8n-free.hf.space)
-Actúa como un puente inteligente entre el sitio web y el almacenamiento de datos real (hojas de cálculo, CRMs, Telegram, etc).
-*   **Uso en el sitio**: Se utiliza en dos puntos críticos:
-    1.  **Envío de Formulario**: Captura los datos de contacto del lead.
-    2.  **Rastreo Cualitativo**: Envía un JSON completo con el contexto del clic (ID, texto del botón, hora, URL).
-*   **Payload (JSON)**:
-    ```json
-    {
-      "event": "button_click",
-      "text": "Texto del Botón",
-      "id": "generic",
-      "page_url": "...",
-      "timestamp": "ISO-Date"
-    }
-    ```
-*   **Ventaja**: Permite procesar los datos antes de guardarlos (limpieza, alertas, distribución).
-
-### API 3: Google Analytics 4 (gtag.js)
-API de telemetría de comportamiento masivo de Google.
-*   **Uso**: Inyectada en el `<head>` de todas las páginas a través del ID `G-2JYJJ3DXFC`.
-*   **Función**: Genera el mapa de calor, tiempo de estancia, tasa de rebote y segmentación geográfica.
-*   **Integración**: Sus datos alimentan directamente al reporte de Looker Studio embebido en el dashboard.
-
-### API 4: Looker Studio Embed API
-Aunque se presenta como un IFRAME, utiliza la API de Google para asegurar que el contenido se cargue con los permisos correctos (`allow-storage-access-by-user-activation`).
-*   **Sandbox**: Implementamos restricciones de seguridad para que el reporte no interfiera con el resto del sitio, pero permitiendo la interacción táctil.
-
----
-
-## 6. Automatizaciones y Lógica de Usuario (UX)
-
-### 6.1. Secuencia de Servicios Showcase
-Ubicada al final de `index.html`, esta lógica automatiza la presentación del producto:
-1.  **Espera de 4 segundos**: Permite al usuario ver el encabezado.
-2.  **Activación de Marketing**: El sistema simula un clic a los 4s.
-3.  **Activación de Publicidad**: Clic automático a los 6.5s.
-4.  **Activación de Diseño Web**: Clic automático a los 9s.
-Esto asegura que incluso un usuario pasivo vea toda la oferta comercial.
-
-### 6.2. Script de Limpieza de WordPress
-Un script en Python durante el despliegue y reglas CSS en tiempo de ejecución se encargan de ocultar:
-*   Shortcodes huerfanos `[sc_...]`.
-*   Iconos de carrito vacíos.
-*   Menús de administración residuales de Astra.
-
----
-
-## 7. Despliegue y Mantenimiento
-
-### 7.1. Flujo de Trabajo con GitHub
-*   **Branch `main`**: Es la rama productiva. Cualquier commit se despliega automáticamente en la URL pública.
-*   **Sincronización**: Se utiliza `git` para asegurar que los cambios locales y remotos estén siempre alineados.
-
-### 7.2. Cómo añadir un nuevo Tracker
-Para medir un nuevo botón:
-1.  Añadir el atributo `data-tracker="nombre_boton"` al elemento HTML.
-2.  Añadir `'nombre_boton'` al array `metrics` en `dashboard.html`.
-3.  Crear el ID correspondiente en el HTML del dashboard (`count-nombre_boton`).
-
----
-
-## 8. Diagramas de Flujo y Conectividad
-
-### 8.1. Ruta de un Evento de Clic
-```mermaid
-graph LR
-    A[Usuario Final] -- Clic --> B(index.html JS)
-    B -- Fetch 1 --> C[CounterAPI]
-    B -- Fetch 2 --> D[Webhook n8n]
-    B -- Event --> E[Google Analytics 4]
-    C -- Data --> F[dashboard.html]
-    E -- Sync --> G[Looker Studio Report]
-    G -- Embed --> F
 ```
-
-### 8.2. Ciclo de Vida de la Carga de Página
-```mermaid
-sequenceDiagram
-    participant B as Browser
-    participant S as GitHub Server
-    participant A as API Externa
-    B->>S: Petición index.html
-    S-->>B: Envío de HTML/CSS Crítico
-    B->>B: Renderizado de Diseño (Naranja/Negro)
-    Note over B: Espera 4 segundos
-    B->>B: Inicia Secuencia de Servicios
-    B->>A: Envío de Heartbeat de Analítica
+AXELONGO.github.io/
+├── index.html                   ← Landing principal + motor de rastreo
+├── dashboard.html               ← Panel privado de analítica (acceso con contraseña)
+├── DOCUMENTACION_SISTEMA_V2.md ← Este documento
+├── paginas/
+│   ├── nosotros/index.html
+│   └── blog/index.html
+└── sistema_web/assets/
 ```
 
 ---
 
-## 9. Gobernanza de Datos y Seguridad
+## 3. Flujo Completo de Métricas: index.html → CounterAPI → dashboard.html
 
-El sistema cumple con un aislamiento de seguridad de tipo "Static-Only", lo que significa que no se procesan datos sensibles del usuario en el cliente. El webhook de n8n actúa como un buffer que sanitiza las peticiones antes de introducirlas en cualquier base de datos interna.
+Esta es la conexión central del sistema. Los dos archivos se comunican de forma **asíncrona** a través de una API pública externa.
+
+### Paso 1: El Usuario Visita index.html
+El navegador carga el HTML estático. Al final del `<body>` hay un bloque de JavaScript que escucha **eventos de clic** globales usando delegación de eventos. Cada botón rastreable tiene el atributo `data-tracker`:
+
+```html
+<a href="https://wa.me/..." data-tracker="social_wa">WhatsApp</a>
+```
+
+```js
+document.addEventListener('click', function(e) {
+  const tracker = e.target.closest('[data-tracker]');
+  if (!tracker) return;
+  const key = tracker.dataset.tracker;
+  fetch(`https://api.counterapi.dev/v1/axelongosite/${key}/up`, {
+    keepalive: true, mode: 'no-cors'
+  });
+});
+```
+
+### Paso 2: CounterAPI Recibe el Incremento
+URL de escritura (sin barra final):
+```
+https://api.counterapi.dev/v1/axelongosite/{key}/up   ✅ Correcto
+https://api.counterapi.dev/v1/axelongosite/{key}/up/  ❌ Error 301
+```
+
+### Paso 3: dashboard.html Lee los Contadores
+URL de lectura (con barra + cache-buster):
+```
+https://api.counterapi.dev/v1/axelongosite/{key}/?t=1713345600000  ✅ Correcto
+https://api.counterapi.dev/v1/axelongosite/{key}?t=1713345600000   ❌ Error 301
+```
+El `?t=Date.now()` garantiza que el navegador no devuelva una respuesta cacheada.
 
 ---
 
-## 10. Conclusiones y Visión de Futuro
+## 4. Mapa de Contadores (`data-tracker` ↔ Dashboard)
 
-Este ecosistema ha sido diseñado para ser autogestionable. La robustez de la separación entre la visualización (Dashboard) y la operación (Index) permite que el negocio crezca sin necesidad de servidores costosos.
+| `data-tracker` en index.html | ID en dashboard.html   | Descripción                    |
+|------------------------------|------------------------|--------------------------------|
+| `social_fb`                  | `count-social_fb`      | Clics en ícono Facebook        |
+| `social_wa`                  | `count-social_wa`      | Clics en ícono WhatsApp        |
+| `social_ig`                  | `count-social_ig`      | Clics en ícono Instagram       |
+| `social_tk`                  | `count-social_tk`      | Clics en ícono TikTok          |
+| `social_yt`                  | `count-social_yt`      | Clics en ícono YouTube         |
+| `cat_marketing`              | `count-cat_marketing`  | Clics en pestaña Marketing     |
+| `cat_publicidad`             | `count-cat_publicidad` | Clics en pestaña Publicidad    |
+| `cat_web`                    | `count-cat_web`        | Clics en pestaña Diseño Web    |
+
+> **Nota de Migración (v3.0):** X (Twitter) → WhatsApp (`social_wa`) y LinkedIn → TikTok (`social_tk`). Los nuevos contadores requirieron una primera petición manual `/up` para inicializarse; sin ella, la API devuelve `HTTP 400`.
 
 ---
-**Autoría**: Desarrollado y documentado por Antigravity AI Engine.
-**Versión**: 2.2.0 (Eliminación de Globales y Limpieza absoluta de interfaz)
-**Fecha de última revisión**: 17 de Abril, 2026
+
+## 5. Arquitectura de dashboard.html
+
+### 5.1. Sistema de Autenticación por Contraseña
+
+El dashboard implementa bloqueo basado en `sessionStorage`. El contenido está **oculto por defecto** (`display: none`) y solo se revela tras autenticación exitosa.
+
+**Flujo de autenticación:**
+```
+Carga de página → checkAuth()
+  ├── sessionStorage === 'granted' → Mostrar contenido + updateMetrics()
+  └── No autenticado → Pantalla de login visible
+        └── verifyPassword()
+              ├── Contraseña correcta → sessionStorage = 'granted' → Fade 300ms → updateMetrics()
+              └── Contraseña incorrecta → Error visual 2s
+```
+
+**Contraseña actual:** `axel123`
+
+**IMPORTANTE — Orden del JS:** Las funciones deben declararse en este orden exacto para evitar que `checkAuth()` invoque funciones que aún no existen:
+
+```js
+const metrics = [...];            // 1. Definir datos
+let serviciosChart = null;        // 2. Estado de gráfica
+async function updateMetrics() {} // 3. Motor de datos
+function actualizarGrafica() {}   // 4. Motor visual
+function checkAuth() {}           // 5. Auth (usa updateMetrics)
+function verifyPassword() {}      // 6. Auth
+checkAuth();                      // 7. Ejecución — siempre al final
+setInterval(...);                 // 8. Refresco periódico
+```
+
+**Vida de la sesión:** El `sessionStorage` se borra al cerrar la pestaña. No hay cookies persistentes.
+
+### 5.2. Motor de Carga de Métricas (`updateMetrics`)
+
+Las peticiones se hacen de forma **secuencial** con 100ms de delay entre cada una:
+- Respeta el rate limit de CounterAPI (30 req/min)
+- Evita activar heurísticas de AdBlockers que detectan ráfagas de peticiones como trackers agresivos
+
+### 5.3. Gráfica de Servicios (Chart.js)
+
+Tras cargar todas las métricas, `updateMetrics()` alimenta la gráfica de dona con los datos de los drei servicios. Usa el patrón **singleton** para evitar crear múltiples instancias en cada refresco:
+
+```js
+if (serviciosChart) {
+  serviciosChart.data.datasets[0].data = [mkt, pub, web]; // Actualizar datos
+  serviciosChart.update();
+} else {
+  serviciosChart = new Chart(ctx, { ... }); // Crear solo la primera vez
+}
+```
+
+---
+
+## 6. Stack Tecnológico
+
+| Tecnología | Versión/ID | Uso |
+|-----------|-----------|-----|
+| CounterAPI | v1 | Contadores de clics cuantitativos |
+| Chart.js | 4.4.0 (CDN) | Gráfica de dona de servicios |
+| Looker Studio | Embed API | Reporte cualitativo de comportamiento |
+| Google Analytics 4 | G-2JYJJ3DXFC | Telemetría de sesiones |
+| n8n Webhook | hf.space | Captura de leads del formulario |
+| Tailwind CSS | CDN | Estilos del dashboard |
+| FontAwesome | 6.5.1 | Iconografía |
+
+---
+
+## 7. Diagrama de Flujo del Sistema
+
+```mermaid
+graph TD
+    U[Usuario visita index.html] -->|data-tracker clic| JS[Listener JS global]
+    JS -->|GET .../key/up| CA[(CounterAPI)]
+    JS -->|POST JSON| N8N[Webhook n8n]
+    JS -->|gtag event| GA4[Google Analytics 4]
+    GA4 --> LS[Looker Studio Report]
+
+    subgraph dashboard.html - Acceso Protegido
+        LOGIN[Pantalla Login] -->|axel123| DASH[Panel de Métricas]
+        DASH -->|GET .../key/?t=ts| CA
+        DASH --> CHART[Gráfica Dona Chart.js]
+        DASH --> IFRAME[iframe Looker Studio]
+    end
+
+    LS -->|embed| IFRAME
+```
+
+---
+
+## 8. Buenas Prácticas Aplicadas (v3.0)
+
+| Área | Práctica |
+|------|----------|
+| **SEO** | `noindex, nofollow` para excluir el dashboard de buscadores |
+| **Accesibilidad** | `aria-label`, `role="alert"`, `aria-hidden="true"` en íconos decorativos |
+| **Formularios** | `<label>` vinculado con `for`, `autocomplete="current-password"` |
+| **Performance** | Peticiones secuenciales con delay de 100ms |
+| **JS Correctness** | Variables y funciones definidas antes de ser invocadas |
+| **Chart.js** | Patrón singleton para evitar instancias duplicadas |
+| **UX** | Feedback visual inmediato con limpieza automática (2s) |
+| **Mantenibilidad** | Array `metrics` centralizado como fuente única de verdad |
+
+---
+
+## 9. Guía Rápida: Agregar un Nuevo Contador
+
+1. En `index.html`: añadir `data-tracker="nuevo_nombre"` al elemento HTML
+2. En `dashboard.html`: añadir `'nuevo_nombre'` al array `metrics`
+3. En `dashboard.html`: crear `<span id="count-nuevo_nombre">0</span>` en el HTML
+4. **Inicializar** el contador (solo la primera vez):
+   ```bash
+   curl https://api.counterapi.dev/v1/axelongosite/nuevo_nombre/up
+   ```
+
+---
+
+## 10. Historial de Versiones
+
+| Versión | Fecha | Cambios principales |
+|---------|-------|-------------------|
+| 1.0 | Abr 2026 | Migración WordPress → Jamstack estático |
+| 2.0 | Abr 2026 | Dashboard v1: CounterAPI + Looker Studio |
+| 2.1 | Abr 2026 | Fix URLs CounterAPI (trailing slash), keepalive en rastreadores |
+| 2.2 | Abr 2026 | Migración redes sociales: X→WhatsApp, LinkedIn→TikTok |
+| **3.0** | **Abr 2026** | **Autenticación con contraseña, gráfica Chart.js, noindex, aria-labels, singleton pattern** |
