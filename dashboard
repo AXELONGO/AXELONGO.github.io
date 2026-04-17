@@ -194,15 +194,7 @@
                 <!-- Este es el lugar donde insertarás el Iframe -->
                 <!-- <iframe width="100%" height="750" src="..." frameborder="0" style="border:0" allowfullscreen></iframe> -->
 
-                <div class="space-y-4 max-w-md mx-auto">
-                    <div class="inline-block p-4 bg-slate-950 rounded-2xl border border-slate-800 mb-2">
-                        <i class="fa-brands fa-google text-slate-600 text-4xl sm:text-6xl animate-pulse"></i>
-                    </div>
-                    <h2 class="text-xl sm:text-2xl font-bold text-white">Visor en espera</h2>
-                    <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
-                        Estamos listos para recibir tus datos. Reemplaza este bloque de texto en tu archivo <code>dashboard.html</code> por el código <code>&lt;iframe&gt;</code> de Looker Studio.
-                    </p>
-                </div>
+                <iframe width="100%" height="750" src="https://datastudio.google.com/embed/reporting/75058d68-ec1c-47a9-aa61-dfbcc75face9/page/dSUvF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox" class="rounded-xl w-full"></iframe>
             </div>
 
             <!-- Efectos Estéticos -->
