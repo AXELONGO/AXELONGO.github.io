@@ -40,12 +40,12 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
 }
 
 /* Botón Enviar (Contacto) - REPARACIÓN FINAL */
+/* Botón Enviar (Contacto) - REPARACIÓN FINAL */
 .form-submit-btn, button[type="submit"] {
-    display: inline-block !important;
-    width: auto !important;
-    min-width: 250px !important;
+    display: block !important;
+    width: 250px !important;
     height: auto !important;
-    padding: 22px 60px !important;
+    padding: 22px 0px !important;
     border: 3px solid #f9a825 !important;
     color: #f9a825 !important;
     background: #ffffff !important;
@@ -53,13 +53,10 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     font-weight: 800 !important;
     font-size: 1.5rem !important;
     text-align: center !important;
-    margin: 40px auto !important;
+    margin: 40px auto 20px auto !important;
     cursor: pointer !important;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
-    position: relative !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
     outline: none !important;
     box-sizing: border-box !important;
 }
@@ -67,7 +64,7 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
 .form-submit-btn:hover, button[type="submit"]:hover {
     background: #f9a825 !important;
     color: #ffffff !important;
-    transform: translateX(-50%) translateY(-5px) !important;
+    transform: translateY(-5px) !important;
     box-shadow: 0 8px 20px rgba(249, 168, 37, 0.4) !important;
 }
 
@@ -95,4 +92,10 @@ textarea {
     padding: 18px 20px !important;
     box-sizing: border-box !important;
     font-size: 1.1rem !important;
+}
+
+label {
+    display: block !important;
+    margin-bottom: 8px !important;
+    font-weight: 600 !important;
 }
