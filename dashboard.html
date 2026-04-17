@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <!-- Stats Grid -->
+        <!-- Stats Grid Principal -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <!-- Clicks Counter Card -->
             <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl flex items-center gap-5 group hover:border-blue-500/50 transition-all">
@@ -76,12 +76,113 @@
                     <i class="fa-solid fa-mouse-pointer text-blue-500 text-3xl"></i>
                 </div>
                 <div>
-                    <p class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Clics Totales (Index)</p>
-                    <h2 id="global-click-count" class="text-3xl font-black text-white">Cargando...</h2>
+                    <p class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Clics Totales (Cualquier lugar)</p>
+                    <h2 id="global-click-count" class="text-3xl font-black text-white">0</h2>
                 </div>
             </div>
+
+            <!-- WhatsApp Counter -->
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl flex items-center gap-5 group hover:border-green-500/50 transition-all">
+                <div class="bg-green-500/10 p-4 rounded-xl group-hover:bg-green-500/20 transition-all">
+                    <i class="fa-brands fa-whatsapp text-green-500 text-3xl"></i>
+                </div>
+                <div>
+                    <p class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Clics WhatsApp</p>
+                    <h2 id="count-whatsapp" class="text-3xl font-black text-white">0</h2>
+                </div>
+            </div>
+
+            <!-- Kaizen Button -->
+            <div class="bg-slate-900 border border-orange-800/20 p-6 rounded-2xl shadow-xl flex items-center gap-5 group hover:border-orange-500/50 transition-all">
+                <div class="bg-orange-500/10 p-4 rounded-xl group-hover:bg-orange-500/20 transition-all">
+                    <i class="fa-solid fa-bolt text-orange-500 text-3xl"></i>
+                </div>
+                <div>
+                    <p class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Clics en Kaizen</p>
+                    <h2 id="count-btn_kaizen" class="text-3xl font-black text-white">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secciones de Detalle -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             
-            <!-- Aquí puedes añadir más tarjetas como "Sesiones", "Usuarios", etc. -->
+            <!-- Redes Sociales -->
+            <div class="bg-slate-900/50 border border-slate-800 p-6 rounded-3xl">
+                <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-share-nodes text-blue-400"></i> Redes Sociales
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <span class="text-slate-400 flex items-center gap-3"><i class="fa-brands fa-facebook text-blue-500"></i> Facebook</span>
+                        <span id="count-social_fb" class="text-white font-bold text-lg">0</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <span class="text-slate-400 flex items-center gap-3"><i class="fa-brands fa-x-twitter text-slate-200"></i> X (Twitter)</span>
+                        <span id="count-social_x" class="text-white font-bold text-lg">0</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <span class="text-slate-400 flex items-center gap-3"><i class="fa-brands fa-instagram text-pink-500"></i> Instagram</span>
+                        <span id="count-social_ig" class="text-white font-bold text-lg">0</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <span class="text-slate-400 flex items-center gap-3"><i class="fa-brands fa-linkedin text-blue-600"></i> LinkedIn</span>
+                        <span id="count-social_li" class="text-white font-bold text-lg">0</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <span class="text-slate-400 flex items-center gap-3"><i class="fa-brands fa-youtube text-red-500"></i> YouTube</span>
+                        <span id="count-social_yt" class="text-white font-bold text-lg">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicios y Portafolio -->
+            <div class="bg-slate-900/50 border border-slate-800 p-6 rounded-3xl">
+                <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-briefcase text-orange-400"></i> Servicios y Portafolio
+                </h3>
+                <div class="space-y-4">
+                    <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <p class="text-[10px] text-slate-500 uppercase font-bold mb-2">Pestañas de Servicios</p>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="text-center p-2 bg-slate-900 rounded-lg">
+                                <span class="block text-[10px] text-slate-400 mb-1">Marketing</span>
+                                <span id="count-cat_marketing" class="text-white font-bold">0</span>
+                            </div>
+                            <div class="text-center p-2 bg-slate-900 rounded-lg">
+                                <span class="block text-[10px] text-slate-400 mb-1">Publicidad</span>
+                                <span id="count-cat_publicidad" class="text-white font-bold">0</span>
+                            </div>
+                            <div class="text-center p-2 bg-slate-900 rounded-lg">
+                                <span class="block text-[10px] text-slate-400 mb-1">Diseño Web</span>
+                                <span id="count-cat_web" class="text-white font-bold">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <p class="text-[10px] text-slate-500 uppercase font-bold mb-2">Clics en Imágenes (Portafolio)</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex justify-between items-center p-1.5">
+                                <span class="text-xs text-slate-400">Marketing</span>
+                                <span id="count-port_marketing" class="text-white font-bold">0</span>
+                            </div>
+                            <div class="flex justify-between items-center p-1.5">
+                                <span class="text-xs text-slate-400">Diseño UX</span>
+                                <span id="count-port_ux" class="text-white font-bold">0</span>
+                            </div>
+                            <div class="flex justify-between items-center p-1.5">
+                                <span class="text-xs text-slate-400">Multimedia</span>
+                                <span id="count-port_multimedia" class="text-white font-bold">0</span>
+                            </div>
+                            <div class="flex justify-between items-center p-1.5">
+                                <span class="text-xs text-slate-400">Negocio</span>
+                                <span id="count-port_negocio" class="text-white font-bold">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Dashboard Container (Responsive Iframe Wrapper) -->
@@ -117,21 +218,33 @@
     </main>
 
     <script>
-        async function updateClickCounter() {
-            try {
-                const response = await fetch('https://api.countapi.xyz/get/axelongosite/global_clicks');
-                const data = await response.json();
-                document.getElementById('global-click-count').innerText = data.value.toLocaleString();
-            } catch (error) {
-                document.getElementById('global-click-count').innerText = "0";
-                console.log("Esperando primeros clics...");
-            }
+        const metrics = [
+            'global_clicks', 'whatsapp', 'btn_kaizen', 
+            'social_fb', 'social_x', 'social_ig', 'social_li', 'social_yt',
+            'cat_marketing', 'cat_publicidad', 'cat_web',
+            'port_marketing', 'port_ux', 'port_multimedia', 'port_negocio'
+        ];
+
+        async function updateMetrics() {
+            metrics.forEach(async (key) => {
+                try {
+                    const response = await fetch(`https://api.countapi.xyz/get/axelongosite/${key}`);
+                    const data = await response.json();
+                    const elementId = key === 'global_clicks' ? 'global-click-count' : `count-${key}`;
+                    const el = document.getElementById(elementId);
+                    if (el) el.innerText = data.value.toLocaleString();
+                } catch (error) {
+                    const elementId = key === 'global_clicks' ? 'global-click-count' : `count-${key}`;
+                    const el = document.getElementById(elementId);
+                    if (el && el.innerText === "Cargando...") el.innerText = "0";
+                }
+            });
         }
 
         // Actualizar al cargar
-        updateClickCounter();
+        updateMetrics();
         // Actualizar cada 30 segundos
-        setInterval(updateClickCounter, 30000);
+        setInterval(updateMetrics, 30000);
     </script>
 
 </body>
