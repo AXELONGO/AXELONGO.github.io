@@ -198,19 +198,38 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 </script>
 
 <style id="force-orange-titles">
-    /* FORZAR NARANJA EN TODOS LOS TITULOS - BYPASS CACHE & DYNAMIC STYLES */
+    /* TITULOS NARANJAS (SOLO ENCABEZADOS RELEVANTES) */
     h1, h2, h3, h4, h5, h6,
     .section-title,
     .wp-block-heading,
     .desktop-gradient-title,
     .spectra-heading,
-    .uagb-toc__title,
-    [data-spectra-id] h1, [data-spectra-id] h2, [data-spectra-id] h3,
-    .wp-block-spectra-content,
-    .spectra-button__link {
+    .uagb-toc__title {
         color: #f9a825 !important;
-        -webkit-text-fill-color: #f9a825 !important; /* Para corregir gradientes de Spectra */
+        -webkit-text-fill-color: #f9a825 !important;
         background-image: none !important;
+    }
+
+    /* TEXTOS DESCRIPTIVOS Y BOTONES DE TABS A NEGRO */
+    p, li, span, 
+    .wp-block-spectra-content, 
+    .spectra-button__link,
+    .wp-block-spectra-tabs-child-tab-button div {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        background-image: none !important;
+    }
+
+    /* EXCEPCION: El boton de enviar formulario debe seguir siendo blanco sobre naranja */
+    #submit-btn.form-submit-btn {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* EXCEPCION: Los botones de "Saber mas" deben seguir siendo blancos sobre naranja */
+    .btn-orange-hover, .wp-block-button__link {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
     }
 </style>
 </head>
