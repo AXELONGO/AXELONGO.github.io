@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com/"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JYJJ3DXFC"></script>
@@ -105,6 +107,16 @@
                         </div>
                     </div>
 
+                    <!-- Gráfica de Dona -->
+                    <div class="mt-5 flex flex-col items-center">
+                        <canvas id="servicios-chart" height="220"></canvas>
+                        <div class="flex gap-4 mt-3 text-xs font-bold text-slate-500">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full inline-block" style="background:#f97316"></span>Marketing</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full inline-block" style="background:#fb923c"></span>Publicidad</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full inline-block" style="background:#fdba74"></span>Diseño Web</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -137,6 +149,8 @@
             'cat_marketing', 'cat_publicidad', 'cat_web'
         ];
 
+        let serviciosChart = null;
+
         async function updateMetrics() {
             console.log('--- Actualizando métricas ---');
             for (const key of metrics) {
@@ -163,7 +177,49 @@
                 }
                 await new Promise(r => setTimeout(r, 100));
             }
+
+            // Actualizar gráfica con datos reales
+            const mkt = parseInt(document.getElementById('count-cat_marketing')?.innerText) || 0;
+            const pub = parseInt(document.getElementById('count-cat_publicidad')?.innerText) || 0;
+            const web = parseInt(document.getElementById('count-cat_web')?.innerText) || 0;
+            actualizarGrafica(mkt, pub, web);
+
             console.log('--- Actualización completada ---');
+        }
+
+        function actualizarGrafica(mkt, pub, web) {
+            const ctx = document.getElementById('servicios-chart');
+            if (!ctx) return;
+            if (serviciosChart) {
+                serviciosChart.data.datasets[0].data = [mkt, pub, web];
+                serviciosChart.update();
+            } else {
+                serviciosChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Marketing', 'Publicidad', 'Diseño Web'],
+                        datasets: [{
+                            data: [mkt, pub, web],
+                            backgroundColor: ['#f97316', '#fb923c', '#fdba74'],
+                            borderColor: ['#ea6700', '#f87316', '#fca550'],
+                            borderWidth: 2,
+                            hoverOffset: 8
+                        }]
+                    },
+                    options: {
+                        cutout: '68%',
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: ctx => ` ${ctx.label}: ${ctx.parsed} clics`
+                                }
+                            }
+                        },
+                        animation: { duration: 600, easing: 'easeInOutQuart' }
+                    }
+                });
+            }
         }
 
         // --- Sistema de Autenticación ---
