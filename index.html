@@ -318,7 +318,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
         -webkit-text-fill-color: #000000 !important;
     }
 
-    /* 3. TEXTO DE LOS BOTONES (SABER MAS / ENVIAR) EN NEGRO */
+    /* 3. TEXTO DE LOS BOTONES EN NEGRO */
     .wp-block-button__link, 
     .btn-orange-hover,
     #submit-btn.form-submit-btn {
@@ -332,28 +332,39 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
         -webkit-text-fill-color: #000000 !important;
     }
 
-    /* 5. SECCION DEL FORMULARIO Y TITULOS DEL FORMULARIO: TODO EN NEGRO */
-    .form-container,
-    .form-container h2, 
-    .form-container .section-title,
-    .form-container label,
-    .form-container input,
-    .form-container select,
-    .form-container textarea {
+    /* 5. SECCION DEL FORMULARIO EN NEGRO */
+    .form-container, .form-container * {
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
     }
 
-    /* 6. REFINAMIENTOS MOVILES Y VIDEO BANNER */
+    /* 6. OCULTAR ICONOS DE CARRITO Y MENU EXTRA (ASTRA RESIDUES) */
+    .ast-site-header-cart, 
+    .ast-header-cart-container, 
+    .ast-cart-menu-wrap,
+    .ast-mobile-header-stack .ast-site-header-cart,
+    [data-section="section-header-mobile-trigger"] .ast-button-wrap .ast-mobile-menu-trigger-minimal[aria-label*="cart"],
+    .cart-container {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+    }
+
+    /* 7. VIDEO BANNER RESPONSIVO */
     .w-full.bg-white video {
         width: 100% !important;
         height: auto !important;
         max-height: 50vh !important;
         object-fit: cover !important;
+        background: #000; /* Fondo negro por si no carga */
     }
 
-    @media (max-width: 768px) {
-        .edit-link, .admin-bar, #wpadminbar, .screen-reader-text:not(:focus), .yoast-text {
+    @media (max-width: 921px) {
+        /* Ocultar cualquier texto residual de "cart" o "menu" que reporte el usuario */
+        .ast-header-cart-container, .ast-site-header-cart-li, .ast-site-header-cart-li * {
             display: none !important;
         }
         .w-full.bg-white {
@@ -386,8 +397,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 									</div>
 																									<div class="site-header-primary-section-right site-header-section ast-flex ast-grid-right-section">
 										<div class="ast-builder-layout-element ast-flex site-header-focus-item ast-header-html-1" data-section="section-hb-html-1">
-			<div class="ast-header-html inner-link-style-"><div class="ast-builder-html-element"><p>[sc_cart_menu_icon cart_icon="shopping-bag" cart_menu_always_shown=1]</p>
-</div></div>		</div>
+			<!-- Shortcode residual eliminado -->		</div>
 				<div class="ast-builder-layout-element ast-flex site-header-focus-item" data-section="section-header-mobile-trigger">
 						<div class="ast-button-wrap">
 				<button type="button" class="menu-toggle main-header-menu-toggle ast-mobile-menu-trigger-minimal" aria-expanded="false" aria-label="Main menu toggle">
@@ -851,7 +861,7 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
 <!-- Banner Publicitario Final (Video) -->
 <div class="w-full bg-white">
     <video autoplay muted loop playsinline class="w-full h-auto block object-cover" style="max-height: 400px; width: 100%;">
-        <source src="./sistema_web/assets/uploads/2026/04/banner-final.mov" type="video/quicktime">
+        <source src="./sistema_web/assets/uploads/2026/04/banner-final.mov" >
         Tu navegador no soporta el formato de video.
     </video>
 </div>
