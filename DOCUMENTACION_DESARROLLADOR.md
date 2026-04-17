@@ -93,10 +93,13 @@ graph LR
     style css_styles fill:#f44336,color:#fff
 ```
 
-### Nuevas Automatizaciones (UX/Analytics)
-*   **Auto-Scroll Logix**: Tras 3 segundos de carga, el sistema realiza un desplazamiento suave a la sección de servicios y activa automáticamente la pestaña de 'Publicidad Digital'.
-*   **Global Click Tracking**: Todos los botones 'Saber más' y elementos de navegación reportan su interacción directamente a `demian405-n8n-free.hf.space` para medición de Customer Journey.
+### Refinamientos Recientes (UX/Performance)
+*   **Auto-Scroll & Service Showcase (V2)**: Secuencia optimizada con 4 segundos de espera inicial (lectura de cabecera) y 2.5 segundos de exposición por cada bloque de servicio (Marketing → Publicidad → Web).
+*   **Limpieza de Residuos de WordPress**: Eliminación automatizada de shortcodes residuales (`[sc_cart_menu_icon]`) y elementos de carrito en todas las páginas (`index.html`, `nosotros`, `blog`) para un acabado 100% Jamstack.
+*   **Optimización de Carga**: Eliminación del banner de video final pesado para priorizar la velocidad de carga en dispositivos móviles y la retención del usuario.
 
-### Funciones Principales Destacadas
-*   `custom-styles.css`: Dicta todo el sistema de botones, *paddings* responsivos de las cajas amarillas (Grid containers) y anula el efecto de código espagueti de temas base.
-*   `dashboard.html`: Actúa como una carcasa en blanco cuya única misión es envolver nuestro `iframe` de Google Data Studio de la forma más limpia posible para el gerente del negocio.
+### Funciones Técnicas Críticas
+*   **Sistema de Estilos Forzados (`force-orange-titles`)**: Bloque CSS inyectado en el `<head>` que asegura la identidad visual: títulos en Naranja (#f9a825), textos generales en Negro absoluto (#000000) y botones con texto legible en negro, anulando cualquier herencia de temas base de Astra/WordPress.
+*   **Global Click Tracking**: Integración híbrida con **CounterAPI** (conteo persistente) y **Webhooks de n8n** (captura de contexto enriquecido: texto del botón, ID de componente y URL de origen).
+*   **Sincronización GitHub CI/CD**: Arquitectura limpia donde `index.html` actúa como controlador principal y las subpáginas heredan la limpieza estructural del proyecto.
+
