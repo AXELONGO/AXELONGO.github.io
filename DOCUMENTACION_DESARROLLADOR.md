@@ -31,6 +31,8 @@ graph TD
 
 ## 2. Diagrama de Rastreo Analítico (Looker Studio + CounterAPI)
 
+Además de CounterAPI para conteos numéricos, el sistema utiliza un **Webhook de n8n** para capturar eventos enriquecidos (clics en botones con texto y URL).
+
 Para no saturar el código con bases de datos ni ralentizar la web (lo cual rompería la retención), desarrollamos un modelo "Event-Driven" de clics pasivos:
 
 ```mermaid
@@ -38,10 +40,12 @@ sequenceDiagram
     participant Usuario as Visitante Web
     participant UI as Botones e Interfaz (HTML)
     participant CounterAPI as Counter API (Base Externa)
+    participant Webhook as Webhook n8n (Integración Externa)
     participant Looker as Google Looker Studio Dashboard
 
     Usuario->>UI: Da clic en "Enviar" o "Contratar"
     UI->>CounterAPI: Fetch pasivo a /global_clicks/up (sin trabar la página)
+    UI->>Webhook: Post JSON (Texto, URL, Timestamp, ID)
     CounterAPI-->>CounterAPI: Suma la interacción
     Looker->>CounterAPI: Lee la base de datos de clics
     Looker-->>Administrador: Visualiza el Performance de Conversión
@@ -88,6 +92,10 @@ graph LR
     style CarpetaSistema fill:#2196F3,color:#fff
     style css_styles fill:#f44336,color:#fff
 ```
+
+### Nuevas Automatizaciones (UX/Analytics)
+*   **Auto-Scroll Logix**: Tras 3 segundos de carga, el sistema realiza un desplazamiento suave a la sección de servicios y activa automáticamente la pestaña de 'Publicidad Digital'.
+*   **Global Click Tracking**: Todos los botones 'Saber más' y elementos de navegación reportan su interacción directamente a `demian405-n8n-free.hf.space` para medición de Customer Journey.
 
 ### Funciones Principales Destacadas
 *   `custom-styles.css`: Dicta todo el sistema de botones, *paddings* responsivos de las cajas amarillas (Grid containers) y anula el efecto de código espagueti de temas base.
