@@ -18,7 +18,31 @@
       gtag('config', 'G-2JYJJ3DXFC');
     </script>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen font-sans selection:bg-orange-500/30">
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans selection:bg-orange-500/30 line-numbers-hidden">
+    
+    <!-- Login Screen -->
+    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/95 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-2xl w-full max-w-sm mx-4 transform transition-all text-center">
+            <div class="bg-orange-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
+                <i class="fa-solid fa-lock text-orange-500 text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-black text-slate-900 mb-2">Panel Privado</h2>
+            <p class="text-slate-500 text-sm mb-8">Ingresa la contraseña para acceder a las métricas del sistema.</p>
+            
+            <form id="auth-form" onsubmit="event.preventDefault(); verifyPassword();" class="space-y-4">
+                <div>
+                    <input type="password" id="password-input" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-center tracking-widest text-lg font-mono" placeholder="•••••••" autofocus>
+                    <p id="auth-error" class="text-red-500 text-xs font-bold mt-2 hidden">Contraseña incorrecta</p>
+                </div>
+                <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95 flex items-center justify-center gap-2">
+                    Ingresar <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenido Protegido -->
+    <div id="dashboard-content" style="display: none;">
     
     <!-- Nav / Header -->
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 shadow-sm">
@@ -146,8 +170,43 @@
         </footer>
         
     </main>
+    </div>
 
     <script>
+        // --- Sistema de Autenticación Ligero ---
+        function checkAuth() {
+            if (sessionStorage.getItem('dashboard_auth') === 'granted') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+                updateMetrics(); // Cargar métricas solo al autenticar
+            }
+        }
+        
+        function verifyPassword() {
+            const pass = document.getElementById('password-input').value;
+            const err = document.getElementById('auth-error');
+            
+            if (pass === 'axel123') {
+                sessionStorage.setItem('dashboard_auth', 'granted');
+                document.getElementById('login-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('dashboard-content').style.display = 'block';
+                    updateMetrics(); // Arrancar motor de métricas
+                }, 300);
+            } else {
+                err.classList.remove('hidden');
+                document.getElementById('password-input').classList.add('border-red-500', 'bg-red-50');
+                setTimeout(() => {
+                    err.classList.add('hidden');
+                    document.getElementById('password-input').classList.remove('border-red-500', 'bg-red-50');
+                }, 2000);
+            }
+        }
+        
+        // Ejecutar check visual al cargar la página
+        checkAuth();
+
         const metrics = [
             'global_clicks',
             'social_fb', 'social_wa', 'social_ig', 'social_tk', 'social_yt',
@@ -197,11 +256,15 @@
             if (btn) btn.disabled = false;
         }
 
-        // Actualizar al cargar
-        updateMetrics();
-        // Cada 60s
-        setInterval(updateMetrics, 60000);
+        // Ya no llamamos a updateMetrics() automáticamente al final del archivo.
+        // Ahora se controla desde el sistema de Autenticación checkAuth() cuando es exitoso.
+        
+        // Intervalo de cada 60s se mantiene (pero la web no lo dispara si el panel se esconde... en realidad el iframe o timers ocultos seguirán pero al ser privados, está bien.)
+        setInterval(() => {
+            if (sessionStorage.getItem('dashboard_auth') === 'granted') {
+                updateMetrics();
+            }
+        }, 60000);
     </script>
-
 </body>
 </html>
