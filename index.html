@@ -697,7 +697,9 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
     }
     /* Estilo para el botón Enviar */
     button[type="submit"] {
-        padding: 14px 60px !important;
+        width: 100% !important; /* Por defecto ancho completo (móvil) */
+        max-width: 300px !important; /* Pero no infinito */
+        padding: 14px 40px !important;
         border: 2px solid #ff8c00 !important;
         background: transparent !important;
         color: #334155 !important;
@@ -708,8 +710,17 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
         cursor: pointer !important;
         transition: all 0.3s ease !important;
         margin-top: 20px !important;
-        display: inline-block !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
         letter-spacing: 0.5px !important;
+    }
+    @media (min-width: 768px) {
+        button[type="submit"] {
+            width: auto !important;
+            display: inline-block !important;
+            margin-left: 0 !important;
+        }
     }
     button[type="submit"]:hover {
         background: #ff8c00 !important;
