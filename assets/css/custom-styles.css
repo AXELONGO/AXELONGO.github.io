@@ -41,19 +41,17 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
 
 /* Botón Enviar (Contacto) - REPARACIÓN FINAL */
 .form-submit-btn, button[type="submit"] {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 260px !important;
-    height: 70px !important;
-    line-height: normal !important;
-    padding: 0 !important;
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 250px !important;
+    height: auto !important;
+    padding: 22px 60px !important;
     border: 3px solid #f9a825 !important;
     color: #f9a825 !important;
     background: #ffffff !important;
     border-radius: 100px !important;
     font-weight: 800 !important;
-    font-size: 1.4rem !important;
+    font-size: 1.5rem !important;
     text-align: center !important;
     margin: 40px auto !important;
     cursor: pointer !important;
@@ -88,10 +86,13 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     }
 }
 
-/* Formularios más redondeados */
+/* Formularios más redondeados y padding */
 input[type="text"],
 input[type="email"],
 select,
 textarea {
     border-radius: 12px !important;
+    padding: 18px 20px !important;
+    box-sizing: border-box !important;
+    font-size: 1.1rem !important;
 }
