@@ -523,7 +523,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 
         <div class="form-container">
             <h2 class="section-title" style="text-align: left !important; font-size: 2rem !important;">Trabajemos juntos</h2>
-            <form action="https://www.pruebas.com" method="POST">
+            <form id="contact-form" action="https://demian405-n8n-free.hf.space/webhook/Formulario" method="POST">
                 <label>Nombre</label>
                 <input type="text" name="nombre" required>
 
@@ -552,8 +552,38 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                 <label>Mensaje</label>
                 <textarea name="mensaje" rows="4" placeholder="Describe tu proyecto..."></textarea>
 
-                <button type="submit" class="form-submit-btn">Enviar</button>
+                <button type="submit" id="submit-btn" class="form-submit-btn">Enviar</button>
             </form>
+            
+            <script>
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault(); // Evita que la pagina recargue y te redireccione al json crudo
+                
+                var form = this;
+                var button = document.getElementById('submit-btn');
+                button.textContent = 'Enviando...';
+                button.disabled = true;
+
+                var formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                }).then(function(response) {
+                    if (response.ok) {
+                        alert('¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.');
+                        form.reset();
+                    } else {
+                        alert('Hubo un error al enviar el mensaje. Por favor intenta de nuevo.');
+                    }
+                }).catch(function(error) {
+                    alert('Error de conexión. Inténtalo más tarde.');
+                }).finally(function() {
+                    button.textContent = 'Enviar';
+                    button.disabled = false;
+                });
+            });
+            </script>
         </div>
     </div>
 </section>
