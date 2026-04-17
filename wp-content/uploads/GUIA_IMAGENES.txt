@@ -1,0 +1,15 @@
+# 🖼️ Carpeta: uploads (Tus Imágenes)
+
+Aquí es donde se guardan todos los archivos multimedia que subiste originalmente a WordPress.
+
+### 📍 Ubicación de las imágenes de "Nuestros Servicios":
+Las fotos que ves en la sección de servicios están en:
+`wp-content/uploads/2026/04/`
+
+**Los archivos reales son:**
+- `quitale_este_texto_202604161708.jpeg` (Asesorías de marketing)
+- `quita_estas_letras_202604161725.jpeg` (Automatizaciones de negocio)
+- (Y los otros archivos .jpeg en esa misma carpeta).
+
+---
+💡 **CONSEJO:** Si quieres cambiar una imagen, simplemente sube una nueva a esta misma carpeta y asegúrate de actualizar el nombre en el archivo `index.html`.
