@@ -41,18 +41,19 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
 
 /* Botón Enviar (Contacto) - REPARACIÓN FINAL */
 .form-submit-btn, button[type="submit"] {
-    display: inline-block !important;
-    width: auto !important;
-    min-width: 220px !important;
-    height: 60px !important;
-    line-height: 25px !important;
-    padding: 0 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 260px !important;
+    height: 70px !important;
+    line-height: normal !important;
+    padding: 0 !important;
     border: 3px solid #f9a825 !important;
     color: #f9a825 !important;
     background: #ffffff !important;
     border-radius: 100px !important;
     font-weight: 800 !important;
-    font-size: 1.2rem !important;
+    font-size: 1.4rem !important;
     text-align: center !important;
     margin: 40px auto !important;
     cursor: pointer !important;
@@ -62,12 +63,13 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     left: 50% !important;
     transform: translateX(-50%) !important;
     outline: none !important;
+    box-sizing: border-box !important;
 }
 
 .form-submit-btn:hover, button[type="submit"]:hover {
     background: #f9a825 !important;
     color: #ffffff !important;
-    transform: translateX(-50%) translateY(-3px) !important;
+    transform: translateX(-50%) translateY(-5px) !important;
     box-shadow: 0 8px 20px rgba(249, 168, 37, 0.4) !important;
 }
 
