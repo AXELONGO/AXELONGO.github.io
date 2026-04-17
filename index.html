@@ -693,15 +693,14 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
         transition: opacity 0.3s ease;
     }
 
-    /* Imágenes Horizontales Responsivas */
+    /* Imágenes Horizontales Responsivas (Unificadas) */
     .responsive-horizontal-img {
         width: 100% !important;
         max-width: 100% !important;
-        height: auto !important;
-        aspect-ratio: 16 / 9 !important;
+        height: 220px !important; /* Altura fija base para consistencia inicial */
         object-fit: cover !important;
         border-radius: 1.25rem !important;
-        margin: 1.5rem 0 !important;
+        margin: 20px 0 !important;
         display: block !important;
         box-shadow: 0 4px 15px rgba(0,0,0,0.06) !important;
     }
@@ -713,6 +712,7 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
         .section-title { font-size: 1.6rem !important; }
         .services-section { padding: 30px 10px !important; }
         .wp-block-spectra-tabs-child-tabpanel { min-height: 600px !important; }
+        .responsive-horizontal-img { height: 180px !important; }
     }
 
     /* Móviles Generales (Android, iPhone) */
@@ -740,19 +740,23 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
 
         /* Listas y textos */
         p, li { font-size: 1rem !important; }
+        .responsive-horizontal-img { height: 200px !important; }
     }
 
     /* Tablets y Pantallas Medianas */
     @media (min-width: 768px) and (max-width: 1023px) {
         .grid-container { grid-template-columns: repeat(2, 1fr) !important; }
         .wp-block-spectra-tabs-child-tab-button { flex: 0 1 auto !important; }
-        .responsive-horizontal-img { aspect-ratio: 21 / 9 !important; }
+        .responsive-horizontal-img { height: 240px !important; aspect-ratio: 21 / 9 !important; }
     }
 
     /* Escritorio (Computadora) */
     @media (min-width: 1024px) {
         .grid-container { grid-template-columns: 1.1fr 0.9fr; gap: 50px; }
-        .responsive-horizontal-img { aspect-ratio: 16 / 6 !important; }
+        .responsive-horizontal-img { 
+            height: 260px !important; 
+            aspect-ratio: 16 / 6 !important; 
+        }
 
         /* Estilos de Color Solicitados */
         .desktop-gradient-title {
