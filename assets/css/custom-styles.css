@@ -1,6 +1,6 @@
 /* --- DISEÑO BASE Y COLORES --- */
 h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
-    color: #ff8c00 !important; /* Naranja vibrante axelongo */
+    color: #ff8c00 !important;
 }
 
 .section-title {
@@ -10,135 +10,6 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     font-size: 2.5rem !important;
     display: block !important;
     font-weight: 600 !important;
-}
-
-/* --- COMPONENTES OPTIMIZADOS (ANTI-ESPAGUETI) --- */
-
-/* Sección de Servicios */
-.services-section {
-    padding: 60px 20px !important;
-    background-color: #fff !important;
-}
-
-.services-grid {
-    display: grid !important;
-    grid-template-columns: repeat(1, 1fr) !important;
-    gap: 20px !important;
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-}
-
-.service-card {
-    display: block !important;
-    height: 350px !important;
-    border-radius: 2rem !important;
-    background-size: cover !important;
-    background-position: center !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-    overflow: hidden !important;
-    border: none !important;
-}
-
-.service-card:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
-}
-
-/* --- SISTEMA RESPONSIVO Y ESTABILIDAD (UX FIJO) --- */
-
-/* Configuración Base de Secciones */
-.services-section {
-    padding: 60px 20px !important;
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 25px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Estabilidad de Layout (Evita saltos de página) */
-.wp-block-spectra-tabs-child-tabpanel {
-    min-height: 520px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    transition: opacity 0.3s ease;
-    padding: 45px 40px !important; /* Más espacio interno solicitado */
-}
-
-/* Imágenes Horizontales Responsivas (Unificadas) */
-.responsive-horizontal-img {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: 220px !important; /* Altura fija base para consistencia inicial */
-    object-fit: cover !important;
-    border-radius: 1.25rem !important;
-    margin: 20px 0 !important;
-    display: block !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06) !important;
-}
-
-/* --- BREAKPOINTS ESPECÍFICOS --- */
-
-/* Móviles Pequeños (iPhone SE, etc.) */
-@media (max-width: 375px) {
-    .section-title { font-size: 1.6rem !important; }
-    .services-section { padding: 30px 10px !important; }
-    .wp-block-spectra-tabs-child-tabpanel { min-height: 600px !important; }
-    .responsive-horizontal-img { height: 180px !important; }
-}
-
-/* Móviles Generales (Android, iPhone) */
-@media (max-width: 767px) {
-    .section-title { 
-        font-size: 1.9rem !important; 
-        line-height: 1.2 !important;
-        margin-bottom: 25px !important;
-    }
-    .wp-block-heading { font-size: 1.4rem !important; }
-    .wp-block-spectra-tabs-child-tab-button {
-        flex: 1 1 100% !important;
-        min-height: 48px !important;
-        margin-bottom: 8px !important;
-        font-size: 0.9rem !important;
-    }
-    .grid-container { 
-        grid-template-columns: 1fr !important; 
-        gap: 20px !important;
-    }
-    p, li { font-size: 1rem !important; }
-    .responsive-horizontal-img { height: 200px !important; }
-}
-
-/* Tablets y Pantallas Medianas */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .grid-container { grid-template-columns: repeat(2, 1fr) !important; }
-    .wp-block-spectra-tabs-child-tab-button { flex: 0 1 auto !important; }
-    .responsive-horizontal-img { height: 240px !important; aspect-ratio: 21 / 9 !important; }
-}
-
-/* Escritorio (Computadora) */
-@media (min-width: 1024px) {
-    .grid-container { grid-template-columns: 1.1fr 0.9fr; gap: 50px; }
-    .responsive-horizontal-img { height: 260px !important; aspect-ratio: 16 / 6 !important; }
-    .desktop-gradient-title {
-        color: #f9a825 !important;
-        background: none !important;
-        -webkit-text-fill-color: initial !important;
-        filter: none !important;
-    }
-    .desktop-gradient-desc {
-        color: #000000 !important;
-        background: none !important;
-        -webkit-text-fill-color: initial !important;
-        filter: none !important;
-    }
 }
 
 /* Colores Globales de Texto en esta sección */
@@ -198,4 +69,19 @@ h1, h2, h3, h4, h5, h6, .uagb-toc__title, .wp-block-heading, .section-title {
     color: #ffffff !important;
     transform: translateX(-50%) translateY(-3px) !important;
     box-shadow: 0 8px 20px rgba(249, 168, 37, 0.4) !important;
+}
+
+@media (min-width: 1024px) {
+    .desktop-gradient-title {
+        color: #f9a825 !important;
+        background: none !important;
+        -webkit-text-fill-color: initial !important;
+        filter: none !important;
+    }
+    .desktop-gradient-desc {
+        color: #000000 !important;
+        background: none !important;
+        -webkit-text-fill-color: initial !important;
+        filter: none !important;
+    }
 }
