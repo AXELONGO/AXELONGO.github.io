@@ -1,88 +1,94 @@
 # Tarjetas de Presentación Digitales - Documentación de Desarrollo
 
-Este documento sirve como la guía técnica oficial y documentación para el proyecto **Tarjetas de Presentación Digitales**, alojado de forma estática en GitHub Pages. Recoge la estructura lógica, las especificaciones del diseño funcional, el rastreo de métricas (KPIs), y la arquitectura de directorios.
+Este documento sirve como la guía técnica oficial y visual para el proyecto **Tarjetas de Presentación Digitales**, alojado de forma estática en GitHub Pages. A continuación, se detallan los ecosistemas comerciales, la ruta de datos y la arquitectura construida mediante diagramas técnicos modernos.
 
 ---
 
-## 1. Visión y Fases del Proyecto
+## 1. El Embudo de Conversión (Funnel de Marketing)
 
-El proyecto está diseñado bajo una estructura de embudo de ventas o "Funnel de Marketing", compuesto por las siguientes etapas:
-1. **Presencia:** Visibilidad inicial para prospectos.
-2. **Consideración:** Interés e información del servicio.
-3. **Conversión:** La acción de contacto y adquisición.
-4. **Fidelización:** Estrategia apuntando a la recompra continua.
-*(Su meta principal radica en medir el % de retención en cada uno de los canales asignados a este embudo).*
+El núcleo del negocio está estructurado para capturar prospectos y filtrarlos estratégicamente. Nuestra meta principal es medir el `% de retención` en cada etapa del túnel.
 
-### Fases de Ejecución:
-1. **Objetivo:** Analizar el negocio local desde su núcleo.
-2. **Construcción:** Fabricar el esqueleto y maquetación inicial del site.
-3. **Lógica de Embudo:** Integrar la semántica orientada a la conversión de clientes.
-4. **Diseño:** Asegurar un diseño intuitivo, responsivo y visualmente atractivo (Botones tipo píldora, acentos naranjas sobre fondo blanco).
-5. **Métricas (KPIs):** Configurar Google Looker Studio y conectar las bases de analítica de KPIs.
+```mermaid
+graph TD
+    %% Estilos avanzados
+    classDef top fill:#ff9800,stroke:#e65100,stroke-width:2px,color:#fff;
+    classDef mid fill:#ffb74d,stroke:#f57c00,stroke-width:2px,color:#000;
+    classDef bot fill:#ffe0b2,stroke:#ff9800,stroke-width:2px,color:#000;
+    classDef end_funnel fill:#4caf50,stroke:#388e3c,stroke-width:2px,color:#fff;
 
----
-
-## 2. Stack de Herramientas (Tecnologías)
-
-*   **HTML y CSS:** Arquitectura base y estilos (Migración desde de WordPress a sistema enteramente Estático y libre de Backend).
-*   **Git y GitHub Pages:** Control de versiones e infraestructura de alojamiento serverless.
-*   **Flow / Canva:** Prototipado, fluidez de experiencia de usuario (UX) y diseño rápido de assets gráficos.
-*   **Gemini 1.5:** Asistencia IA para la automatización, refactorización, scripting masivo de depuración de links, y creación UI/UX de alta fidelidad.
-*   **Google Looker Studio / CounterAPI:** Tracking asíncrono para bases de datos de métricas.
-
----
-
-## 3. Rama de Carpetas (Estructura del Repositorio)
-
-El proyecto fue refactorizado exitosamente de un modelo estructurado en WordPress a un CMS estático, encapsulado para máxima escalabilidad:
-
-```text
-/
-├── index.html                   # Página principal (Landing de aterrizaje y embudo central).
-├── dashboard.html               # Panel privado de control que integra Looker Studio.
-├── DOCUMENTACION_DESARROLLADOR.md # Este archivo (Directrices de código y métricas)
-├── paginas/                     # Sub-directorios estáticos de contenido.
-│   ├── blog/                    # Contenía sub-páginas como "journal".
-│   │   └── index.html           
-│   └── nosotros/                # Contenía sub-páginas como "philosophy".
-│       └── index.html           
-└── sistema_web/                 # Núcleo del sistema (Reemplazo del clásico wp-admin/includes)
-    ├── assets/                  # CSS Global, Javascript local, Plugins, Temas y Assets Gráficos
-    │   ├── css/custom-styles.css # ARCHIVO CRÍTICO: Hoja de ruta para utilidades CSS del proyecto
-    │   └── uploads/             # Todas las imágenes y archivos visuales del proyecto.
-    └── core/                    # Scripts esenciales (Librería extraída de WordPress).
+    A[Presencia: Visibilidad de Marca y Anuncios]:::top --> B
+    B[Consideración: Valor e Información del Servicio]:::mid --> C
+    C[Conversión: Clic en Contacto y Generación de Leads]:::bot --> D
+    D[Fidelización: Retención, KPI de Recompra y Promotores]:::end_funnel
 ```
 
-*Nota:* Todas las rutas relativas apuntan directamente a `sistema_web/` desde cualquier archivo en la raíz para facilitar la lectura de dependencias sin recurrir a un servidor dinámico.
+*   **Presencia**: Captura inicial del usuario hacia `index.html`.
+*   **Consideración**: Usuario lee métricas y consume contenido.
+*   **Conversión**: Acciona nuestros "Botones tipo Píldora Naranjas".
+*   **Fidelización**: Seguimiento y aumento del Lifetime Value (Tiempo de Vida del Cliente).
 
 ---
 
-## 4. Uso de Fragmentos de Código Relevantes
+## 2. Diagrama de Rastreo Analítico (Looker Studio + CounterAPI)
 
-### A. Estilos CSS Personalizados (`sistema_web/assets/css/custom-styles.css`)
-Todo el estilo modernizado, alineación y limpieza visual han sido concentrados en este archivo para evitar el uso excesivo de variables estáticas. 
-*   **Ejemplo Clave (`btn-orange-hover` y `form-submit-btn`):** Las hojas dictan que todos los botones usen formas redondeadas de pastilla (pill-shape) en color blanco, acentuando un borde o un relleno naranja y animaciones hover fluidas para alentar a la "Conversión".
-*   **Ejemplo Clave (`.responsive-horizontal-img` y grids):** Resuelven la visualización móvil para que la página sea completamente compatible con pantallas de celular agregando padding o flex-wrap nativo con Vanilla CSS puro.
+Para no saturar el código con bases de datos ni ralentizar la web (lo cual rompería la retención), desarrollamos un modelo "Event-Driven" de clics pasivos:
 
-### B. El Dashboard (`dashboard.html`)
-Es un entorno en blanco puro minimalista, usando fuentes de alto contraste naranja y negras. Sirve puramente de "Host" o anfitrión para un fragmento `<iframe>` de Google Looker Studio diseñado exclusivamente para ver el flujo.
+```mermaid
+sequenceDiagram
+    participant Usuario as Visitante Web
+    participant UI as Botones e Interfaz (HTML)
+    participant CounterAPI as Counter API (Base Externa)
+    participant Looker as Google Looker Studio Dashboard
 
-### C. Sistema de Envío del Formulario (Formulario de Email en `index.html`)
-El formulario HTML ubicado al final de `index.html` es el call-to-action del embudo de conversión y permite al usuario proveer sus datos (Nombre, Email, Teléfono, Paquete e Intereses) hacia el sistema de la agencia. 
+    Usuario->>UI: Da clic en "Enviar" o "Contratar"
+    UI->>CounterAPI: Fetch pasivo a /global_clicks/up (sin trabar la página)
+    CounterAPI-->>CounterAPI: Suma la interacción
+    Looker->>CounterAPI: Lee la base de datos de clics
+    Looker-->>Administrador: Visualiza el Performance de Conversión
+```
 
 ---
 
-## 5. La Función de Leer Métricas (Analytics & Looker Studio)
+## 3. Topología Tecnológica (Stack de Herramientas)
 
-Una de las prioridades absolutas fue implementar una solución de rastreo que lograra identificar clics, retención, y el avance del embudo sin requerir bases de datos remotas de paga:
+Todo el proceso de desarrollo está orquestado por un ecosistema engranado, donde cada pieza cumple una función singular para reducir costos operativos:
 
-1. **Rastreo Nativo por Eventos HTTP con Javascript (`index.html`)**
-   Al final del index.html, se instaló un escuchador en Javascript capaz de interceptar todos los "clics" de manera pasiva a través de una API gratuita (`CounterAPI`). 
-   *   **Global Clicks:** Cada que un usuario haga clic literal en la página web, se suma una llamada `Fetch` a `global_clicks/up`.
-   *   **Individual Tracker:** Todos aquellos botones estratégicos poseen un atributo HTML extra `data-tracker="[ID-DE-BOTON]"`. Al darles clic, la lógica suma una conversión de clic individual en CounterAPI sin redirigir malintencionadamente al usuario.
+```mermaid
+pie title Distribución del Ecosistema del Proyecto
+    "HTML Estático & CSS (Velocidad y Jamstack)" : 40
+    "GitHub Pages (Alojamiento CI/CD Gratuito)" : 20
+    "Gemini 1.5 (UX, Code, Analítica IA)" : 20
+    "Looker Studio + CounterAPI (Análisis KPI)" : 15
+    "Flow / Canva (Wireframes & Assets Visuales)" : 5
+```
 
-2. **Google Looker Studio (El `iframe`)**
-   Toda esta información en bruto es visualizada en tiempo real mediante un tablero (Dashboard) conectado. 
-   El siguiente iframe incrustado de Looker:
-   `<iframe src="https://datastudio.google.com/embed/reporting/75058d68-ec1c-47a9-aa61-dfbcc75face9/page/dSUvF"></iframe>`
-   Actúa como nuestro **panel de retención**. Este evalúa mediante gráficas la etapa de **"Consideración a Conversión"**, dándonos el % del flujo de usuarios reales en Looker Studio y determinando la efectividad general del diseño web.
+---
+
+## 4. Arquitectura de Directorios (Mapeo de Carpetas)
+
+Aislar correctamente los "Assets" (CSS, JS, Imágenes) de la estructura del "Frontend" (Páginas) previene cuellos de botella al momento de actualizar o diseñar componentes en el futuro.
+
+```mermaid
+graph LR
+    Root((Raíz GitHub Pages)) --> HTML_Index((index.html))
+    Root --> HTML_Dash((dashboard.html))
+    
+    Root --> CarpetaPaginas(paginas/)
+    CarpetaPaginas --> CarpetaBlog(blog/)
+    CarpetaPaginas --> CarpetaNosotros(nosotros/)
+    
+    Root --> CarpetaSistema(sistema_web/)
+    CarpetaSistema --> C_Assets(assets/)
+    CarpetaSistema --> C_Core(core/ - Extraído de WordPress)
+    
+    C_Assets --> css_styles[css/custom-styles.css]
+    C_Assets --> imgs_uploads[uploads/ Imágenes y Banners]
+    
+    style Root fill:#333,stroke:#fff,color:#fff
+    style CarpetaSistema fill:#2196F3,color:#fff
+    style css_styles fill:#f44336,color:#fff
+```
+
+### Funciones Principales Destacadas
+*   `custom-styles.css`: Dicta todo el sistema de botones, *paddings* responsivos de las cajas amarillas (Grid containers) y anula el efecto de código espagueti de temas base.
+*   `dashboard.html`: Actúa como una carcasa en blanco cuya única misión es envolver nuestro `iframe` de Google Data Studio de la forma más limpia posible para el gerente del negocio.
