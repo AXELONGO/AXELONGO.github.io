@@ -208,8 +208,8 @@
             
             for (const key of metrics) {
                 try {
-                    // Limpieza de URL: quitar barra redundante antes de ?t=
-                    const url = `https://api.counterapi.dev/v1/axelongosite/${key}?t=${Date.now()}`;
+                    // La API de CounterAPI *requiere* una barra al final para lecturas, si no hace redirect y falla por CORS
+                    const url = `https://api.counterapi.dev/v1/axelongosite/${key}/?t=${Date.now()}`;
                     const response = await fetch(url);
                     
                     const elementId = key === 'global_clicks' ? 'global-click-count' : `count-${key}`;
