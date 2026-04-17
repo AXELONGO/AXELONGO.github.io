@@ -41,6 +41,18 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         
+        <!-- Header del Dashboard -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+            <div>
+                <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">Panel de Análisis <span class="text-orange-500">AXELONGO</span></h1>
+                <p class="text-slate-500 text-sm sm:text-base mt-2">Monitoreo de rendimiento y conversiones en tiempo real</p>
+            </div>
+            <button onclick="updateMetrics()" class="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-2xl font-bold transition-all shadow-lg active:scale-95 group">
+                <i class="fa-solid fa-rotate group-hover:rotate-180 transition-transform duration-500"></i>
+                Actualizar Ahora
+            </button>
+        </div>
+
         <!-- Info Card -->
         <div class="bg-gradient-to-br from-orange-50 to-white border border-orange-200 rounded-2xl p-4 sm:p-6 mb-8 shadow-sm overflow-hidden relative group">
             <div class="absolute -right-4 -top-4 bg-orange-500/10 w-24 h-24 rounded-full blur-2xl group-hover:bg-orange-500/20 transition-all"></div>
@@ -51,7 +63,6 @@
                 </div>
                 <div class="flex-1">
                     <h3 class="text-lg font-bold text-orange-600 mb-2 leading-tight">Implementación de Métricas GA4</h3>
-                    <!-- Eliminado el texto descriptivo como solicitado -->
                     <div class="flex flex-wrap gap-2 pt-2">
                         <div class="flex items-center gap-1.5 bg-white border border-slate-200 rounded-lg px-3 py-1.5">
                             <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
@@ -190,24 +201,38 @@
         ];
 
         async function updateMetrics() {
-            for (const key of metrics) {
+            console.log('--- Iniciando actualización de métricas ---');
+            
+            // Peticiones en paralelo para mayor velocidad y robustez
+            const fetchPromises = metrics.map(async (key) => {
                 try {
                     const response = await fetch(`https://api.counterapi.dev/v1/axelongosite/${key}/?t=${Date.now()}`);
-                    if (!response.ok) throw new Error('Not found');
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     const data = await response.json();
+                    
                     const elementId = key === 'global_clicks' ? 'global-click-count' : `count-${key}`;
                     const el = document.getElementById(elementId);
-                    if (el) el.innerText = (data.count || 0).toLocaleString();
+                    if (el) {
+                        el.innerText = (data.count || 0).toLocaleString();
+                        el.classList.add('text-orange-500');
+                    }
+                    console.log(`Métrica [${key}]: ${data.count}`);
                 } catch (error) {
-                    console.error('Error fetching ' + key + ':', error);
+                    console.warn(`Error en métrica [${key}]:`, error.message);
+                    const elementId = key === 'global_clicks' ? 'global-click-count' : `count-${key}`;
+                    const el = document.getElementById(elementId);
+                    if (el && el.innerText === '0') el.innerText = 'Error';
                 }
-            }
+            });
+
+            await Promise.allSettled(fetchPromises);
+            console.log('--- Actualización completada ---');
         }
 
         // Actualizar al cargar
         updateMetrics();
-        // Actualizar cada 30 segundos
-        setInterval(updateMetrics, 30000);
+        // Actualizar cada 60 segundos (para evitar Rate Limiting de 30req/min)
+        setInterval(updateMetrics, 60000);
     </script>
 
 </body>
