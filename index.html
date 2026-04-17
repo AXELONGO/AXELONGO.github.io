@@ -196,6 +196,23 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 
   gtag('config', 'G-2JYJJ3DXFC');
 </script>
+
+<style id="force-orange-titles">
+    /* FORZAR NARANJA EN TODOS LOS TITULOS - BYPASS CACHE & DYNAMIC STYLES */
+    h1, h2, h3, h4, h5, h6,
+    .section-title,
+    .wp-block-heading,
+    .desktop-gradient-title,
+    .spectra-heading,
+    .uagb-toc__title,
+    [data-spectra-id] h1, [data-spectra-id] h2, [data-spectra-id] h3,
+    .wp-block-spectra-content,
+    .spectra-button__link {
+        color: #f9a825 !important;
+        -webkit-text-fill-color: #f9a825 !important; /* Para corregir gradientes de Spectra */
+        background-image: none !important;
+    }
+</style>
 </head>
 
 <body itemtype="https://schema.org/WebPage" itemscope="itemscope" class="home wp-singular page-template-default page page-id-43 wp-embed-responsive wp-theme-astra ast-desktop ast-plain-container ast-no-sidebar astra-4.13.0 ast-single-post ast-inherit-site-logo-transparent ast-theme-transparent-header ast-hfb-header ast-full-width-primary-header">
