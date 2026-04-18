@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,174 +13,152 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    
+
     <!-- Google Analytics GA4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2JYJJ3DXFC"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-2JYJJ3DXFC');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-2JYJJ3DXFC');
     </script>
 </head>
+
 <body class="bg-slate-50 text-slate-800 min-h-screen font-sans selection:bg-orange-500/30">
-    
-    <!-- Login Screen -->
-    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/95 backdrop-blur-sm transition-opacity duration-300">
-        <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-2xl w-full max-w-sm mx-4 transform transition-all text-center">
-            <div class="bg-orange-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
-                <i class="fa-solid fa-lock text-orange-500 text-2xl"></i>
-            </div>
-            <h2 class="text-2xl font-black text-slate-900 mb-2">Panel Privado</h2>
-            <p class="text-slate-500 text-sm mb-8">Ingresa la contraseña para acceder a las métricas del sistema.</p>
-            
-            <form id="auth-form" aria-label="Formulario de acceso al panel" onsubmit="event.preventDefault(); verifyPassword();" class="space-y-4">
+
+    <div id="dashboard-content" class="min-h-screen">
+
+        <!-- Nav / Header -->
+        <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="bg-orange-100 p-2 rounded-lg">
+                        <i class="fa-solid fa-chart-pie text-orange-500 text-lg" aria-hidden="true"></i>
+                    </div>
+                    <span class="text-base sm:text-lg font-bold text-orange-600 tracking-tight">Panel de Análisis</span>
+                </div>
                 <div>
-                    <label for="password-input" class="sr-only">Contraseña de acceso</label>
-                    <input type="password" id="password-input" autocomplete="current-password" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all text-center tracking-widest text-lg font-mono" placeholder="•••••••" autofocus>
-                    <p id="auth-error" class="text-red-500 text-xs font-bold mt-2 hidden" role="alert">Contraseña incorrecta</p>
-                </div>
-                <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95 flex items-center justify-center gap-2">
-                    Ingresar <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Contenido Protegido -->
-    <div id="dashboard-content" style="display: none;">
-
-    <!-- Nav / Header -->
-    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2 sm:gap-3">
-                <div class="bg-orange-100 p-2 rounded-lg">
-                    <i class="fa-solid fa-chart-pie text-orange-500 text-lg" aria-hidden="true"></i>
-                </div>
-                <span class="text-base sm:text-lg font-bold text-orange-600 tracking-tight">Panel de Análisis</span>
-            </div>
-            <div>
-                <a href="./index.html" aria-label="Ir al inicio" class="text-xs sm:text-sm font-medium bg-white hover:bg-slate-50 text-slate-700 py-2 px-3 sm:px-4 rounded-full transition-all border border-slate-200 active:scale-95 flex items-center gap-2">
-                    <i class="fa-solid fa-house" aria-hidden="true"></i>
-                    <span class="hidden sm:inline">Inicio</span>
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
-        
-
-        <!-- Secciones de Detalle -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            
-            <!-- Redes Sociales -->
-            <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm">
-                <h3 class="text-lg font-bold text-orange-600 mb-6 flex items-center gap-2">
-                    <i class="fa-solid fa-share-nodes text-orange-500"></i> Redes Sociales
-                </h3>
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <span class="text-slate-700 flex items-center gap-3"><i class="fa-brands fa-facebook text-blue-500"></i> Facebook</span>
-                        <span id="count-social_fb" class="text-orange-500 font-bold text-lg">0</span>
-                    </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <span class="text-slate-700 flex items-center gap-3"><i class="fa-brands fa-whatsapp text-green-500"></i> WhatsApp</span>
-                        <span id="count-social_wa" class="text-orange-500 font-bold text-lg">0</span>
-                    </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <span class="text-slate-700 flex items-center gap-3"><i class="fa-brands fa-instagram text-pink-500"></i> Instagram</span>
-                        <span id="count-social_ig" class="text-orange-500 font-bold text-lg">0</span>
-                    </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <span class="text-slate-700 flex items-center gap-3"><i class="fa-brands fa-tiktok text-slate-800"></i> TikTok</span>
-                        <span id="count-social_tk" class="text-orange-500 font-bold text-lg">0</span>
-                    </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <span class="text-slate-700 flex items-center gap-3"><i class="fa-brands fa-youtube text-red-500"></i> YouTube</span>
-                        <span id="count-social_yt" class="text-orange-500 font-bold text-lg">0</span>
-                    </div>
+                    <a href="./index.html" aria-label="Ir al inicio"
+                        class="text-xs sm:text-sm font-medium bg-white hover:bg-slate-50 text-slate-700 py-2 px-3 sm:px-4 rounded-full transition-all border border-slate-200 active:scale-95 flex items-center gap-2">
+                        <i class="fa-solid fa-house" aria-hidden="true"></i>
+                        <span class="hidden sm:inline">Inicio</span>
+                    </a>
                 </div>
             </div>
+        </header>
 
-            <!-- Servicios y Portafolio -->
-            <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm">
-                <h3 class="text-lg font-bold text-orange-600 mb-6 flex items-center gap-2">
-                    <i class="fa-solid fa-briefcase text-orange-500"></i> Servicios y Portafolio
-                </h3>
-                <div class="space-y-4">
-                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <p class="text-[10px] text-slate-500 uppercase font-bold mb-2">Pestañas de Servicios</p>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div class="text-center p-2 bg-white border border-slate-100 rounded-lg">
-                                <span class="block text-[10px] text-slate-500 mb-1">Marketing</span>
-                                <span id="count-cat_marketing" class="text-orange-500 font-bold">0</span>
-                            </div>
-                            <div class="text-center p-2 bg-white border border-slate-100 rounded-lg">
-                                <span class="block text-[10px] text-slate-500 mb-1">Publicidad</span>
-                                <span id="count-cat_publicidad" class="text-orange-500 font-bold">0</span>
-                            </div>
-                            <div class="text-center p-2 bg-white border border-slate-100 rounded-lg">
-                                <span class="block text-[10px] text-slate-500 mb-1">Diseño Web</span>
-                                <span id="count-cat_web" class="text-orange-500 font-bold">0</span>
-                            </div>
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+
+
+            <!-- Secciones de Detalle -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+
+                <!-- Redes Sociales -->
+                <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm">
+                    <h3 class="text-lg font-bold text-orange-600 mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-share-nodes text-orange-500"></i> Redes Sociales
+                    </h3>
+                    <div class="space-y-4">
+                        <div
+                            class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="text-slate-700 flex items-center gap-3"><i
+                                    class="fa-brands fa-facebook text-blue-500"></i> Facebook</span>
+                            <span id="count-social_fb" class="text-orange-500 font-bold text-lg">0</span>
+                        </div>
+                        <div
+                            class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="text-slate-700 flex items-center gap-3"><i
+                                    class="fa-brands fa-whatsapp text-green-500"></i> WhatsApp</span>
+                            <span id="count-social_wa" class="text-orange-500 font-bold text-lg">0</span>
+                        </div>
+                        <div
+                            class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="text-slate-700 flex items-center gap-3"><i
+                                    class="fa-brands fa-instagram text-pink-500"></i> Instagram</span>
+                            <span id="count-social_ig" class="text-orange-500 font-bold text-lg">0</span>
+                        </div>
+                        <div
+                            class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="text-slate-700 flex items-center gap-3"><i
+                                    class="fa-brands fa-tiktok text-slate-800"></i> TikTok</span>
+                            <span id="count-social_tk" class="text-orange-500 font-bold text-lg">0</span>
+                        </div>
+                        <div
+                            class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <span class="text-slate-700 flex items-center gap-3"><i
+                                    class="fa-brands fa-youtube text-red-500"></i> YouTube</span>
+                            <span id="count-social_yt" class="text-orange-500 font-bold text-lg">0</span>
                         </div>
                     </div>
-
-                    <!-- Gráfica de Barras Horizontal -->
-                    <div class="mt-4 flex flex-col items-center" role="img" aria-label="Gráfica de distribución de clics por servicio">
-                        <canvas id="servicios-chart" height="140" aria-label="Gráfica de barras: Marketing, Publicidad y Diseño Web"></canvas>
-                        <div class="flex gap-4 mt-3 text-xs font-bold text-slate-500">
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full inline-block" style="background:#f97316"></span>Marketing</span>
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full inline-block" style="background:#fb923c"></span>Publicidad</span>
-                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full inline-block" style="background:#fdba74"></span>Diseño Web</span>
-                        </div>
-                    </div>
-
                 </div>
+
+                <!-- Servicios y Portafolio -->
+                <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm">
+                    <h3 class="text-lg font-bold text-orange-600 mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-briefcase text-orange-500"></i> Servicios y Portafolio
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <p class="text-[10px] text-slate-500 uppercase font-bold mb-2">Pestañas de Servicios</p>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="text-center p-2 bg-white border border-slate-100 rounded-lg">
+                                    <span class="block text-[10px] text-slate-500 mb-1">Marketing</span>
+                                    <span id="count-cat_marketing" class="text-orange-500 font-bold">0</span>
+                                </div>
+                                <div class="text-center p-2 bg-white border border-slate-100 rounded-lg">
+                                    <span class="block text-[10px] text-slate-500 mb-1">Publicidad</span>
+                                    <span id="count-cat_publicidad" class="text-orange-500 font-bold">0</span>
+                                </div>
+                                <div class="text-center p-2 bg-white border border-slate-100 rounded-lg">
+                                    <span class="block text-[10px] text-slate-500 mb-1">Diseño Web</span>
+                                    <span id="count-cat_web" class="text-orange-500 font-bold">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
             </div>
 
-        </div>
+            <!-- Dashboard Container (Responsive Iframe Wrapper) -->
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden relative group">
 
-        <!-- Dashboard Container (Responsive Iframe Wrapper) -->
-        <div class="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden relative group">
+                <!-- Placeholder de carga visible mientras iframe carga -->
+                <div id="looker-loading"
+                    class="min-h-[400px] sm:min-h-[600px] md:min-h-[750px] w-full flex flex-col items-center justify-center gap-4 text-slate-400">
+                    <div class="w-10 h-10 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin">
+                    </div>
+                    <p class="text-sm font-medium">Cargando reporte de Looker Studio…</p>
+                </div>
 
-            <!-- Placeholder de carga visible mientras iframe carga -->
-            <div id="looker-loading" class="min-h-[400px] sm:min-h-[600px] md:min-h-[750px] w-full flex flex-col items-center justify-center gap-4 text-slate-400">
-                <div class="w-10 h-10 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
-                <p class="text-sm font-medium">Cargando reporte de Looker Studio…</p>
-            </div>
-
-            <!-- Iframe Looker Studio — dominio actualizado a lookerstudio.google.com -->
-            <iframe
-                id="looker-frame"
-                width="100%"
-                height="750"
-                src="https://lookerstudio.google.com/embed/reporting/75058d68-ec1c-47a9-aa61-dfbcc75face9/page/dSUvF"
-                frameborder="0"
-                style="border:0; display:none;"
-                allowfullscreen
-                allow="storage-access"
-                sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms allow-downloads"
-                class="rounded-xl w-full"
-                title="Reporte de analítica AXELONGO en Looker Studio"
-                onload="
+                <!-- Iframe Looker Studio — dominio actualizado a lookerstudio.google.com -->
+                <iframe id="looker-frame" width="100%" height="800"
+                    src="https://lookerstudio.google.com/embed/reporting/75058d68-ec1c-47a9-aa61-dfbcc75face9/page/dSUvF"
+                    frameborder="0" style="border:0; display:none;" allowfullscreen allow="storage-access"
+                    sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms allow-downloads"
+                    class="rounded-xl w-full" title="Reporte de analítica AXELONGO en Looker Studio" onload="
                     document.getElementById('looker-loading').style.display='none';
                     this.style.display='block';
                 ">
-            </iframe>
+                </iframe>
 
-            <!-- Efectos Estéticos -->
-            <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-orange-100/30 to-transparent pointer-events-none"></div>
-        </div>
-        
-        <!-- Footer de Soporte -->
-        <footer class="mt-8 text-center">
-            <p class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest font-bold">Secure Dashboard System v1.0</p>
-        </footer>
-        
-    </main>
+                <!-- Efectos Estéticos -->
+                <div
+                    class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-orange-100/30 to-transparent pointer-events-none">
+                </div>
+            </div>
+
+            <!-- Footer de Soporte -->
+            <footer class="mt-8 text-center">
+                <p class="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest font-bold">Secure Dashboard
+                    System v1.0</p>
+            </footer>
+
+        </main>
     </div>
 
     <script>
@@ -218,100 +197,17 @@
                 await new Promise(r => setTimeout(r, 100));
             }
 
-            // Actualizar gráfica con datos reales
-            const mkt = parseInt(document.getElementById('count-cat_marketing')?.innerText) || 0;
-            const pub = parseInt(document.getElementById('count-cat_publicidad')?.innerText) || 0;
-            const web = parseInt(document.getElementById('count-cat_web')?.innerText) || 0;
-            actualizarGrafica(mkt, pub, web);
-
             console.log('--- Actualización completada ---');
         }
 
-        function actualizarGrafica(mkt, pub, web) {
-            const ctx = document.getElementById('servicios-chart');
-            if (!ctx) return;
-            if (serviciosChart) {
-                serviciosChart.data.datasets[0].data = [mkt, pub, web];
-                serviciosChart.update();
-            } else {
-                serviciosChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Marketing', 'Publicidad', 'Diseño Web'],
-                        datasets: [{
-                            data: [mkt, pub, web],
-                            backgroundColor: ['#f97316', '#fb923c', '#fdba74'],
-                            borderColor: ['#ea6700', '#f87316', '#fca550'],
-                            borderWidth: 2,
-                            borderRadius: 8
-                        }]
-                    },
-                    options: {
-                        indexAxis: 'y',
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    label: ctx => ` ${ctx.label}: ${ctx.parsed.x} clics`
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { 
-                                beginAtZero: true, 
-                                grid: { display: false },
-                                ticks: { color: '#94a3b8', font: { size: 10 } }
-                            },
-                            y: { 
-                                grid: { display: false },
-                                ticks: { color: '#475569', font: { size: 11, weight: 'bold' } }
-                            }
-                        },
-                        animation: { duration: 600, easing: 'easeInOutQuart' }
-                    }
-                });
-            }
-        }
 
-        // --- Sistema de Autenticación ---
-        function checkAuth() {
-            if (sessionStorage.getItem('dashboard_auth') === 'granted') {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('dashboard-content').style.display = 'block';
-                updateMetrics();
-            }
-        }
-        
-        function verifyPassword() {
-            const pass = document.getElementById('password-input').value;
-            const err = document.getElementById('auth-error');
-            if (pass === 'axel123') {
-                sessionStorage.setItem('dashboard_auth', 'granted');
-                document.getElementById('login-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('login-screen').style.display = 'none';
-                    document.getElementById('dashboard-content').style.display = 'block';
-                    updateMetrics();
-                }, 300);
-            } else {
-                err.classList.remove('hidden');
-                document.getElementById('password-input').classList.add('border-red-500', 'bg-red-50');
-                setTimeout(() => {
-                    err.classList.add('hidden');
-                    document.getElementById('password-input').classList.remove('border-red-500', 'bg-red-50');
-                }, 2000);
-            }
-        }
-        
-        // checkAuth va AL FINAL, cuando ya todo está definido
-        checkAuth();
 
-        // Intervalo de 60s solo si está autenticado
-        setInterval(() => {
-            if (sessionStorage.getItem('dashboard_auth') === 'granted') updateMetrics();
-        }, 60000);
+        // Cargar métricas al inicio
+        updateMetrics();
+
+        // Intervalo de 60s
+        setInterval(updateMetrics, 60000);
     </script>
 </body>
+
 </html>
