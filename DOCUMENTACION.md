@@ -32,13 +32,48 @@ El proyecto sigue un modelo de **Frontend Estático con Microservicios Externos*
 - **Procesamiento de Datos:** [n8n](https://n8n.io/) (Webhook para recibir leads e interacciones).
 - **Visualización Avanzada:** [Google Looker Studio](https://lookerstudio.google.com/) (Reportes de tráfico de GA4).
 
-**Diagrama de Flujo:**
-`[Usuario (Clic)]` ➔ `[JS Local (index.html)]` ➔ `[CounterAPI (Incremento)]` + `[n8n Webhook]`
-`[Administrador]` ➔ `[dashboard.html]` ➔ `[Fetch CounterAPI]` ➔ `[Interfaz Visual]`
+### Diagrama de Arquitectura
+```mermaid
+graph TD
+    subgraph Cliente
+        A[index.html] -->|Clic / data-tracker| B[JS Tracking Engine]
+        C[dashboard.html] -->|Fetch GET| D[JS Dashboard Engine]
+    end
+
+    subgraph Servicios Externos
+        B -->|POST /up| E((CounterAPI))
+        B -->|POST Webhook| F{n8n Webhook}
+        D -->|GET Metrics| E
+        G[Looker Studio] -.->|Iframe| C
+    end
+
+    subgraph Procesamiento
+        F --> H[Google Sheets / CRM]
+        F --> I[Email Notifications]
+    end
+```
 
 ---
 
 ## 🔄 3. Flujo de la Lógica (Métricas e Interacciones)
+
+### Diagrama de Secuencia de Interacción
+```mermaid
+sequenceDiagram
+    participant U as Usuario
+    participant B as Navegador (index.html)
+    participant C as CounterAPI
+    participant N as n8n Webhook
+
+    U->>B: Hace clic en Red Social / Botón
+    B->>B: Detecta data-tracker
+    par Proceso Paralelo
+        B->>C: fetch(.../up) -> Incrementa +1
+        B->>N: POST payload (JSON) -> Notifica evento
+    end
+    N-->>B: OK 200
+    C-->>B: Nuevo conteo
+```
 
 Esta es la parte vital para entender cómo se conectan los archivos:
 
