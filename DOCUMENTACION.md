@@ -140,7 +140,40 @@ Para mejorar el SEO y la retención, el sitio tiene una lógica de "clics fantas
 
 ---
 
-## 🚨 7. Casos Especiales / Errores
+## 📁 7. Guía Detallada de Archivos y Carpetas
+
+### 📂 Directorio Raíz (`/`)
+- **[index.html](file:///Users/axelsoberanes/Desktop/simply-static-1-1776385799/index.html)**: 
+    - **Lógica:** Es el motor principal del sitio. Contiene el HTML de la landing page y el **Tracker de Clics Global**. 
+    - **Funcionalidad:** Escucha eventos de usuario, gestiona el menú móvil y ejecuta la secuencia automática de clics en la sección de servicios para guiar al usuario.
+- **[dashboard.html](file:///Users/axelsoberanes/Desktop/simply-static-1-1776385799/dashboard.html)**: 
+    - **Lógica:** Interfaz de visualización de datos. No guarda información, solo la consulta.
+    - **Funcionalidad:** Realiza peticiones asíncronas (`fetch`) a CounterAPI para mostrar conteos y embebe un reporte externo de Google Looker Studio para analítica avanzada.
+- **[DOCUMENTACION.md](file:///Users/axelsoberanes/Desktop/simply-static-1-1776385799/DOCUMENTACION.md)**: 
+    - **Lógica:** Manual técnico del sistema (este archivo).
+- **[GUIA_ESTRUCTURA.txt](file:///Users/axelsoberanes/Desktop/simply-static-1-1776385799/GUIA_ESTRUCTURA.txt)**: 
+    - **Lógica:** Un mapa rápido de directorios para referencia inmediata del desarrollador.
+
+---
+
+### 📂 Directorio `sistema_web/`
+Esta carpeta contiene el núcleo técnico heredado del generador estático (WordPress).
+- **index.html**: Una página secundaria (sección Filosofía) que mantiene la consistencia visual del sitio.
+- **📂 assets/**:
+    - **📂 css/**: Contiene archivos como `dashboard-app.css`. Estos definen la estética de los componentes del constructor Spectra y el tema Astra.
+    - **📂 plugins/**: Almacena la lógica de terceros (AOS para animaciones al hacer scroll, Swiper para sliders, Spectra para bloques dinámicos).
+    - **📂 themes/**: Específicamente el tema **Astra**, encargado de la estructura base (header, footer, tipografía global).
+    - **📂 uploads/**: El repositorio de medios. Aquí se encuentran todas las imágenes, el favicon y los logos oficiales de AXELONGO.
+
+---
+
+### 📂 Directorio `paginas/`
+Contiene las subsecciones del sitio exportadas como archivos HTML independientes.
+- **Lógica:** Cada carpeta dentro (ej: `nosotros/`, `blog/`) contiene un `index.html` propio. Esto permite que las URLs del sitio sean limpias (ej: `axelongo.com/nosotros`).
+
+---
+
+## 🚨 8. Casos Especiales / Errores
 
 - **¿Qué pasa si falla CounterAPI?** El sitio seguirá funcionando perfecto. El usuario no notará nada, simplemente no se registrará la métrica en ese momento (error manejado con `.catch()`).
 - **¿Qué pasa si el Webhook de n8n está offline?** Los datos de formularios no llegarán al CRM/Email, pero el frontend mostrará una alerta de "Error de conexión" para que el usuario sepa que algo falló.
@@ -148,7 +181,7 @@ Para mejorar el SEO y la retención, el sitio tiene una lógica de "clics fantas
 
 ---
 
-## 🧪 8. Cómo probarlo
+## 🧪 9. Cómo probarlo
 
 1. **Simular Clic:** Abre `index.html` en tu navegador, haz clic en el icono de WhatsApp.
 2. **Verificar Consola:** Presiona F12 (Inspeccionar) y verás los logs de `fetch`.
