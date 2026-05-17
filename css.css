@@ -1,0 +1,152 @@
+/* --- 1. RESET + VARIABLES CSS --- */
+:root {
+    /* Colores base */
+    --bg-color-dark: #0a0a0a;
+    --bg-gradient-color: #1a1a1a;
+    --card-white: #ffffff;
+    --text-main: #ffffff;
+    --text-dark: #333333;
+
+    /* Colores de marca para redes (basados en la imagen) */
+    --color-facebook: #1877f2;
+    --color-whatsapp: #25d366;
+    --color-instagram: #e1306c;
+    --color-tiktok: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text-main);
+    background: radial-gradient(circle, var(--bg-gradient-color) 0%, var(--bg-color-dark) 100%);
+    background-size: cover;
+    min-height: 100dvh;
+    /* Fix para Safari iOS */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    padding: 20px;
+}
+
+/* --- VIDEO DE FONDO --- */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1; /* Se asegura de estar detrás de todo el contenido */
+    pointer-events: none; /* Evita que el video interfiera con los clics del usuario */
+    filter: brightness(0.4); /* Oscurece el video directamente (0.4 es 40% de brillo) */
+}
+
+/* --- 2. LAYOUT CENTRADO Y TARJETA --- */
+.main-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-card {
+    text-align: center;
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(15px, 3vw, 25px);
+    
+    /* --- EFECTO CRISTALINO (Glassmorphism) --- */
+    background: rgba(255, 255, 255, 0.1); /* Fondo súper traslúcido */
+    backdrop-filter: blur(15px); /* Desenfoque del fondo (el efecto cristal) */
+    -webkit-backdrop-filter: blur(15px); /* Soporte para Safari */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde blanco sutil */
+    border-radius: 30px; /* Bordes redondeados como en tu imagen */
+    padding: clamp(30px, 5vw, 40px) clamp(20px, 4vw, 30px); /* Espaciado interno */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Sombra para despegarlo del video */
+}
+
+/* --- 3. COMPONENTES --- */
+
+/* Logo circular */
+.profile-logo {
+    width: clamp(100px, 20vw, 160px);
+    /* Tamaño fluido */
+    height: clamp(100px, 20vw, 160px);
+    /* Tamaño fluido */
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Textos principales */
+.profile-title {
+    font-size: clamp(24px, 5vw, 42px);
+    /* Título fluido */
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.profile-description {
+    font-size: clamp(14px, 1.5vw, 18px);
+    /* Texto fluido */
+    max-width: 480px;
+    margin: 0 auto;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/* Botón CTA (Blanco redondeado) */
+.cta-button {
+    display: inline-block;
+    background-color: var(--card-white);
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: clamp(13px, 1.2vw, 15px);
+    letter-spacing: 0.05em;
+    padding: clamp(15px, 2.5vw, 22px) clamp(25px, 4vw, 40px);
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor de Redes Sociales (Sin fondo) */
+.social-bar {
+    display: flex;
+    gap: clamp(15px, 3vw, 25px);
+    padding: 10px 0;
+}
+
+.social-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(40px, 6vw, 60px);
+    height: clamp(40px, 6vw, 60px);
+    text-decoration: none;
+    color: #ffffff; /* Color blanco para todos los iconos */
+    font-size: clamp(24px, 3vw, 32px); /* Aumentamos un poco el tamaño del ícono al no tener fondo */
+    transition: transform 0.2s ease, opacity 0.2s ease, color 0.2s ease;
+}
+
+.social-link:hover {
+    transform: translateY(-4px); /* Animación más notoria al flotar */
+    opacity: 0.8;
+}
+
+/* Iconos todos en color blanco */
