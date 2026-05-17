@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO & Metadata -->
+    <title>Catálogo de Propiedades | Lumark Realty Group</title>
+    <meta name="description" content="Explora nuestro catálogo en tiempo real. Compra, vende o invierte en bienes raíces con Lumark Realty Group.">
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Estilos globales -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-46KCJW753M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-46KCJW753M');
+    </script>
+
+    <!-- Estilos de Integración en Tiempo Real -->
+    <style>
+        /* Sobrescribir body para un layout de pantalla completa sin scroll externo */
+        body {
+            display: flex !important;
+            flex-direction: column;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden !important;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle, var(--bg-gradient-color) 0%, var(--bg-color-dark) 100%);
+            padding: 0;
+            margin: 0;
+        }
+
+        /* --- Header de Navegación Premium --- */
+        .catalog-header {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 20px 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(-3px);
+        }
+
+        .logo-container img {
+            height: 50px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+        }
+
+        .header-info-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37, 211, 102, 0.15);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            color: #4ade80;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.8em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .header-info-badge i {
+            font-size: 0.9em;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        /* --- Contenedor Principal del Iframe --- */
+        .iframe-main-container {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 1350px;
+            margin: 0 auto 20px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            min-height: 0; /* Permite que el flex-item se encoja correctamente */
+        }
+
+        .glass-frame {
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* El Iframe que carga Multykasas */
+        .embedded-catalog {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .embedded-catalog.loaded {
+            opacity: 1;
+        }
+
+        /* Pantalla de Carga Premium */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
+            color: #ffffff;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Spinner Dorado/Blanco Premium */
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            border-top-color: #ffffff;
+            border-bottom-color: #ffffff;
+            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .loading-subtext {
+            font-size: 0.85em;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+        }
+
+        /* Ajustes de Responsividad */
+        @media (max-width: 768px) {
+            .catalog-header {
+                padding: 15px 15px 10px 15px;
+            }
+            .logo-container img {
+                height: 40px;
+            }
+            .btn-back {
+                padding: 8px 16px;
+                font-size: 0.8em;
+            }
+            .header-info-badge {
+                padding: 6px 12px;
+                font-size: 0.7em;
+            }
+            .iframe-main-container {
+                padding: 0 15px 15px 15px;
+                margin-bottom: 10px;
+            }
+            .glass-frame {
+                border-radius: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Video de fondo animado idéntico al index -->
+    <video class="video-background" autoplay loop muted playsinline>
+        <source src="assets/videos/fondo-lumark.mp4" type="video/mp4">
+    </video>
+
+    <!-- Header de Navegación -->
+    <header class="catalog-header">
+        <a href="index.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> INICIO
+        </a>
+        <div class="logo-container">
+            <img src="assets/images/logo.webp" alt="Logotipo Lumark Realty Group">
+        </div>
+        <div class="header-info-badge">
+            <i class="fas fa-sync-alt"></i> EN TIEMPO REAL
+        </div>
+    </header>
+
+    <!-- Contenedor del Catálogo Integrado -->
+    <main class="iframe-main-container">
+        <div class="glass-frame">
+            <!-- Pantalla de Carga -->
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="spinner"></div>
+                <div class="loading-text">Conectando con Multykasas</div>
+                <div class="loading-subtext">Sincronizando inventario en tiempo real...</div>
+            </div>
+
+            <!-- Iframe de Multykasas -->
+            <iframe 
+                src="https://www.multykasas.com/sitio/casas" 
+                class="embedded-catalog" 
+                id="embeddedCatalog"
+                title="Catálogo de Propiedades Multykasas"
+                allow="geolocation"
+                loading="eager">
+            </iframe>
+        </div>
+    </main>
+
+    <!-- Lógica de Control de Carga -->
+    <script>
+        const iframe = document.getElementById('embeddedCatalog');
+        const overlay = document.getElementById('loadingOverlay');
+
+        // Cuando el iframe termina de cargar, ocultamos la pantalla de carga suavemente
+        iframe.addEventListener('load', () => {
+            // Un pequeño delay para asegurar un renderizado suave en el navegador
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                iframe.classList.add('loaded');
+            }, 600);
+        });
+
+        // Registrar evento en Analytics
+        if (typeof gtag === 'function') {
+            gtag('event', 'view_embedded_catalog', {
+                'source': 'Multykasas'
+            });
+        }
+    </script>
+</body>
+
+</html>
